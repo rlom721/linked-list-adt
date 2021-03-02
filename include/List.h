@@ -8,13 +8,14 @@
 
 #include "DataClass.h"    // header file for ListItem class
 #include "ListItem.h"    // header file for ListItem class
-#include "List.h"    // header file for ListItem class
+// #include "List.h"       // header file for ListItem class
 #include <iostream>
 namespace lomboy_a2 {
+
     class List {
     public:
         // typedef
-        typedef double listType;    // List depends on data type of ListItem
+        typedef ListItem::listDataType listType;    // List depends on data type of ListItem
         // Constructors 
         List();
         List(listType data);
@@ -24,23 +25,25 @@ namespace lomboy_a2 {
         ~List();
         // Modification methods
         void insert(const listType&);       // default inserts new ListItem to tail
-        void insertToHead(listType);    
-        void insertToMid(listType);
-        void remove(listType);
-        bool search(listType);
-        void sortAsc();            // selection sort
-        void sortDesc();
+        // void insertToHead(listType);    
+        // void insertToMid(listType);
+        // void remove(listType);
+        void removeHead();
+        // bool search(listType);
+        // void sortAsc();            // selection sort
+        // void sortDesc();
         void traverse();            // displays list contents as linked list!
         void clearList();          
-        listType iterator();        // like a pointer for a list, but only ret data
-        listType getNext();        // get item after iterator()
-        bool hasNext();        
+        // listType iterator();        // like a pointer for a list, but only ret data
+        // listType getNext();        // get item after iterator()
+        // bool hasNext();        
         // Constant methods
         bool isOrdered() const { return isSorted; };
-        listType start();
+        // listType start();
         // Overloaded Operators
-        List& operator=(const List& l);    // use deep copy
+        // List& operator=(const List& l);    // use deep copy
         // Friend functions
+        friend std::ostream& operator<<(std::ostream& out, const List& l);
     private:
         // Member variables
         ListItem* headPtr;
@@ -48,6 +51,7 @@ namespace lomboy_a2 {
         int size;
         bool isSorted;
     };
+
 }
 
 #endif

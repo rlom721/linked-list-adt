@@ -2,6 +2,7 @@
 #include "UnitTester.h"
 #include "DataClass.h"
 #include "ListItem.h"
+#include "List.h"
 using namespace std;
 using namespace lomboy_a2;
 
@@ -75,6 +76,24 @@ int main () {
     cout << "\nli1\n" <<  li1;
     cout << "\nli2\n" <<  li2;
     cout << "\nli3\n" <<  li3;
+
+    cout << "LIST CLASS\n";
+    
+    List tList(dc1);
+    cout << tList << endl;
+    tList.traverse();
+
+    tList.insert(dc);
+    tList.traverse();
+
+    tList.removeHead();
+    tList.traverse();
+
+    tList.insert(dc1);
+    tList.insert(dc);
+    tList.traverse();
+
+    cout << tList << endl;
 
     return 0;
 }

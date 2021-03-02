@@ -1,10 +1,11 @@
+
 // #include "DataClass.h"    // header file for ListItem class
-#include "ListItem.h"    // header file for ListItem class
 #include "List.h"        // header file for List class
+#include "ListItem.h"    // header file for ListItem class
 #include <iostream>
 using namespace std;
-
 namespace lomboy_a2 {
+
     // Default constructor sets default values of members
     List::List()
         : headPtr(nullptr), tailPtr(nullptr), size(0), isSorted(false) { }  
@@ -27,11 +28,12 @@ namespace lomboy_a2 {
 
     // Destructor frees allocated memory through list
     List::~List() {
+        cout << "DESTRUCTOR!\n";
         clearList();
     }
 
     // This is the default insert method, which adds new ListItem to tail of list.
-    void insert(const listType& entry) {
+    void List::insert(const listType& entry) {
         ListItem* newItemPtr = new ListItem(entry); // new item has entry data
 
         // check for empty list
@@ -45,6 +47,8 @@ namespace lomboy_a2 {
             headPtr = newItemPtr;
             tailPtr = newItemPtr;
         }
+
+        size++;
     }
 
     // This method deletes item at head.
@@ -58,7 +62,7 @@ namespace lomboy_a2 {
             headPtr = temp->getNext();
 
             // check if list has more than one item
-            if (headptr != nullptr) 
+            if (headPtr != nullptr) 
                 headPtr->setPrev(nullptr);
             else    
                 tailPtr = nullptr;
@@ -95,11 +99,40 @@ namespace lomboy_a2 {
 
     // }
 
+    // displays list contents as linked list!
+    void List::traverse() {
+        ListItem* listPtr = headPtr;
+
+        while (listPtr != nullptr) {
+            cout << listPtr->getData() << "->";
+            listPtr = listPtr->getNext();
+        }
+        cout << "END\n";
+
+        listPtr = nullptr;
+    }
+
     // This method iterates through list from head and deletes each item.
     void List::clearList() {
         // remove each item in list starting at head until list is empty
         while (headPtr != nullptr)
             removeHead();
     }     
+
+    // Friend function: Overloaded outstream operator
+    // Displays contents of Linked List
+
+    // Assumes listDataType can be outputted to console (or has outstream capabilities) and
+    // that listDataType has getData member function.
+    ostream& operator<<(ostream& out, const List& l){
+        if (l.headPtr != nullptr && l.tailPtr != nullptr) {
+            out << "headPtr: " << l.headPtr->getData() << endl;
+            out << "tailPtr: " << l.tailPtr->getData() << endl;
+        }
+        else 
+            out << "headPtr and tailPtr are nullptr\n";
+
+        return out;
+    }
 
 }

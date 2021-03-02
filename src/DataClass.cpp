@@ -42,7 +42,7 @@ namespace lomboy_a2 {
   // Friend function: Overloaded outstream operator
   // Displays data of DataClass object
   ostream& operator<<(ostream& out, const DataClass& dc) {
-    out << "data: " << dc.get();
+    out << dc.get();
 
     return out;
   }
