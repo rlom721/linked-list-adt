@@ -29,6 +29,7 @@ namespace lomboy_a2 {
         ListItem* getPrev() { return prevPtr; }
         // constant methods
         listDataType getData() const { return data; }
+        int getDataKey() const { return data.getKey(); }
         // overloaded operators
         ListItem& operator=(const ListItem& li);
         // friend function

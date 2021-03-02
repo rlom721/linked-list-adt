@@ -1,6 +1,6 @@
 // Specification file for List class
 //
-// This List class is a linked list with methods to insert, sort, search, iterate 
+// This List class is a linked list with methods to insert, sort, search, iterate
 // through list.
 
 #ifndef LIST_H
@@ -16,7 +16,7 @@ namespace lomboy_a2 {
     public:
         // typedef
         typedef ListItem::listDataType listType;    // List depends on data type of ListItem
-        // Constructors 
+        // Constructors
         List();
         List(listType data);
         // List(ListItem)        // may remove...
@@ -25,7 +25,7 @@ namespace lomboy_a2 {
         ~List();
         // Modification methods
         void insert(const listType&);       // default inserts new ListItem to tail
-        // void insertToHead(listType);    
+        void insertToHead(const listType&);
         // void insertToMid(listType);
         // void remove(listType);
         void removeHead();
@@ -33,10 +33,10 @@ namespace lomboy_a2 {
         // void sortAsc();            // selection sort
         // void sortDesc();
         void traverse();            // displays list contents as linked list!
-        void clearList();          
+        void clearList();
         // listType iterator();        // like a pointer for a list, but only ret data
         // listType getNext();        // get item after iterator()
-        // bool hasNext();        
+        // bool hasNext();
         // Constant methods
         bool isOrdered() const { return isSorted; };
         // listType start();
@@ -50,6 +50,7 @@ namespace lomboy_a2 {
         ListItem* tailPtr;
         int size;
         bool isSorted;
+        int keyMkr;      // generate a key!
     };
 
 }

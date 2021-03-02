@@ -7,10 +7,10 @@ using namespace std;
 namespace lomboy_a2 {
   // Default constructor uses default constructor of data type to set
   // default value for data
-  DataClass::DataClass() : data(dataType()) { }
+  DataClass::DataClass() : data(dataType()), key(0) { }
 
   // Parametrized constructor sets argument value for data
-  DataClass::DataClass(dataType data) : data(data) { }
+  DataClass::DataClass(dataType data) : data(data), key(0) { }
 
   // Copy constructor copies data AND key value of another DataClass object
   DataClass::DataClass(const DataClass& dc) {

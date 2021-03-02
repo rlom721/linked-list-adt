@@ -8,14 +8,15 @@ namespace lomboy_a2 {
 
     // Default constructor sets default values of members
     List::List()
-        : headPtr(nullptr), tailPtr(nullptr), size(0), isSorted(false) { }
+        : headPtr(nullptr), tailPtr(nullptr), size(0), isSorted(false), keyMkr(0)
+        { }
 
     // Parametrized constructor sets default values of members, then inserts a new
     // entry into list.
     List::List(listType data)
-        : headPtr(nullptr), tailPtr(nullptr), size(0), isSorted(false) {
+        : headPtr(nullptr), tailPtr(nullptr), size(0), isSorted(false), keyMkr(0) {
         insert(data);
-    }  
+    }
 
     // Copy constructor performs deep copy by copying data of elements into ListItems
     // of a NEW location (so pointers don't point to original)
@@ -38,16 +39,33 @@ namespace lomboy_a2 {
 
         // check for empty list
         if (headPtr != nullptr) {
-            // link new item to old tail, set old tail's next to new, set tail to new
+            // link new item to old tail, set old tail's next to new,
             newItemPtr->setPrev(tailPtr);
             tailPtr->setNext(newItemPtr);
-            tailPtr = newItemPtr;
         }
         else {
             headPtr = newItemPtr;
-            tailPtr = newItemPtr;
         }
+        // set tail to new
+        tailPtr = newItemPtr;
+        size++;
+    }
 
+    // This is insert method adds new ListItem to head of list.
+    void List::insertToHead(const listType& entry) {
+        ListItem* newItemPtr = new ListItem(entry); // new item has entry data
+
+        // check for empty list
+        if (headPtr != nullptr) {
+            // link new item to old head, set old head's next to new,
+            newItemPtr->setNext(headPtr);
+            headPtr->setPrev(newItemPtr);
+        }
+        else {
+            headPtr = newItemPtr;
+        }
+        // set head to new
+        headPtr = newItemPtr;
         size++;
     }
 
@@ -104,6 +122,7 @@ namespace lomboy_a2 {
         ListItem* listPtr = headPtr;
 
         while (listPtr != nullptr) {
+            // cout << "(" << listPtr->getDataKey() << ") "
             cout << listPtr->getData() << "->";
             listPtr = listPtr->getNext();
         }
