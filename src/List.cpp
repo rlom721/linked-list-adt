@@ -1,0 +1,105 @@
+// #include "DataClass.h"    // header file for ListItem class
+#include "ListItem.h"    // header file for ListItem class
+#include "List.h"        // header file for List class
+#include <iostream>
+using namespace std;
+
+namespace lomboy_a2 {
+    // Default constructor sets default values of members
+    List::List()
+        : headPtr(nullptr), tailPtr(nullptr), size(0), isSorted(false) { }  
+
+    // Parametrized constructor sets default values of members, then inserts a new
+    // entry into list.
+    List::List(listType data)
+        : headPtr(nullptr), tailPtr(nullptr), size(0), isSorted(false) { 
+        insert(data);
+    }  
+
+    // Copy constructor performs deep copy by copying data of elements into ListItems
+    // of a NEW location (so pointers don't point to original) 
+    List::List(const List& l) {
+        // for empty list
+        if (l.headPtr == nullptr)
+            return;
+        // insert(l.start());   // copy data of first item of list ?? hmm iterators...
+    }
+
+    // Destructor frees allocated memory through list
+    List::~List() {
+        clearList();
+    }
+
+    // This is the default insert method, which adds new ListItem to tail of list.
+    void insert(const listType& entry) {
+        ListItem* newItemPtr = new ListItem(entry); // new item has entry data
+
+        // check for empty list
+        if (headPtr != nullptr) {
+            // link new item to old tail, set old tail's next to new, set tail to new
+            newItemPtr->setPrev(tailPtr);
+            tailPtr->setNext(newItemPtr);
+            tailPtr = newItemPtr;
+        }
+        else {
+            headPtr = newItemPtr;
+            tailPtr = newItemPtr;
+        }
+    }
+
+    // This method deletes item at head.
+    // Works for empty list and one list item cases.
+    void List::removeHead() {
+        // check for empty list OR list having one item
+        if (size > 0) {
+            ListItem* temp = headPtr;    // temporary used to delete item at head
+
+            // set headPtr to item after the one to be deleted, set prev to nullptr
+            headPtr = temp->getNext();
+
+            // check if list has more than one item
+            if (headptr != nullptr) 
+                headPtr->setPrev(nullptr);
+            else    
+                tailPtr = nullptr;
+
+            // free dynamically-allocated ListItem (previous head)
+            delete temp;     
+            size--;
+        } 
+        else {
+            std::cout << "List has no items.\n";
+        }
+    }
+
+    // // This method deletes item from tail.
+    // void List::removeTail() {
+    //     // check for empty list
+    //     if (size != 0) {
+    //         ListItem* temp = tailPtr;       // temporary to delete item at tail
+
+    //         // set tailPtr to item before the one to be deleted, set next field to null
+    //         tailPtr = temp->getPrev();
+    //         tailPtr->setNext(nullptr);
+
+    //         delete temp;    // free dynamically-allocated ListItem (previous tail)
+    //         size--;         // list is one item smaller
+    //     }
+    //     else {
+    //         std::cout << "List has no items.\n";
+    //     }
+    // }
+
+    // // This method deletes item from list with data matching the argument.
+    // void List::remove(listType data) {
+
+    // }
+
+    // This method iterates through list from head and deletes each item.
+    void List::clearList() {
+        // remove each item in list starting at head until list is empty
+        while (headPtr != nullptr)
+            removeHead();
+    }     
+
+}

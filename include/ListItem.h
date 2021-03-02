@@ -6,36 +6,38 @@
 #define LISTITEM_H
 
 #include "DataClass.h"    // header file for ListItem class
+#include "ListItem.h"    // header file for ListItem class
 #include <iostream>
-
-class ListItem {
-public:
-    // typedef
-    typedef DataClass listDataType;   // type of data/class list item holds
-    // friend function
-    friend std::ostream& operator<<(std::ostream& out, const ListItem& li);
-    // constructors
-    ListItem();                   // default
-    ListItem(listDataType ldt);   // parametrized
-    ListItem(listDataType ldt, ListItem* nextItem); // parametrized
-    ListItem(const ListItem& li); // copy
-    // destructor
-    ~ListItem();                  
-    // modification methods
-    void setData(const listDataType& ldt);
-    void setNext(ListItem* nextPtr);
-    void setPrev(ListItem* prevPtr);
-    ListItem* getNext() { return nextPtr; }
-    ListItem* getPrev() { return prevPtr; }
-    // constant methods
-    listDataType getData() const { return data; }
-    // overloaded operators
-    ListItem& operator==(const ListItem& li);
-private:
-    // member variables
-    listDataType data;
-    ListItem* nextPtr;
-    ListItem* prevPtr;
-};
+namespace lomboy_a2 {
+    class ListItem {
+    public:
+        // typedef
+        typedef DataClass listDataType;   // type of data/class list item holds
+        // constructors
+        ListItem();                   // default
+        ListItem(listDataType ldt);   // parametrized
+        ListItem(listDataType ldt, ListItem* nextItem); // parametrized (may remove...)
+        ListItem(const ListItem& li); // copy
+        // destructor
+        // ~ListItem();    // no need?              
+        // modification methods
+        void setData(const listDataType& ldt);
+        void setNext(ListItem* nextPtr);
+        void setPrev(ListItem* prevPtr);
+        ListItem* getNext() { return nextPtr; }
+        ListItem* getPrev() { return prevPtr; }
+        // constant methods
+        listDataType getData() const { return data; }
+        // overloaded operators
+        ListItem& operator=(const ListItem& li);
+        // friend function
+        friend std::ostream& operator<<(std::ostream& out, const ListItem& li);
+    private:
+        // member variables
+        listDataType data;
+        ListItem* nextPtr;
+        ListItem* prevPtr;
+    };
+}
 
 #endif
