@@ -80,36 +80,55 @@ int main () {
     cout << "LIST CLASS\n";
 
     DataClass dc(0.7), dc1(1.1), dc2(2.4), dc3(3.5);
-    cout << "dc1: " << dc1 << endl;
 
     List tList(dc);
-    cout << tList << endl;
+    // cout << tList << endl;
     cout << "tList init with data: " << dc << endl;
+
+    tList.insertToHead(dc1);
+    cout << "Inserted to head\n";
     tList.traverse();
     cout << endl;
 
-    tList.insertToTail(dc1);
-    cout << "inserted data: " << dc1 << endl;
+    tList.insertToTail(dc2);
+    cout << "Inserted to tail\n";
+    tList.traverse();
+    cout << endl;
+
+    tList.insertToMid(dc3);
+    cout << "Inserted to mid\n";
     tList.traverse();
     cout << endl;
 
     tList.removeHead();
-    cout << "removed head " << endl;
+    cout << "Removed head\n";
     tList.traverse();
     cout << endl;
 
-    tList.insertToHead(dc2);
-    tList.insertToHead(dc3);
-    cout << "added to head: " << dc2 << " and " << dc3 << endl << endl;
+    tList.removeHead();
+    cout << "Removed head\n";
     tList.traverse();
     cout << endl;
-    cout << tList << endl;
 
-    List t2List(dc);
+    tList.insertToMid(dc);
+    cout << "Inserted to mid\n";
+    tList.traverse();
+    cout << endl;
 
-    cout << t2List << endl;
-    t2List.insertToTail(dc1);
-    cout << t2List << endl;
+    cout << "Testing search method:\n";
+    cout << "Looking for key of 0... " << tList.search(0) << endl;
+    cout << "Looking for key of 4... " << tList.search(4) << endl;
+    cout << "Looking for key of 7... " << tList.search(7) << endl;
+    cout << "Looking for key of 3... " << tList.search(3) << endl;
+    cout << "Looking for key of 2... " << tList.search(2) << endl;
+
+    // cout << tList << endl;
+
+    // List t2List(dc);
+
+    // cout << t2List << endl;
+    // t2List.insertToTail(dc1);
+    // cout << t2List << endl;
 
     return 0;
 }

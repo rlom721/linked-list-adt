@@ -8,8 +8,7 @@ namespace lomboy_a2 {
 
     // Default constructor sets default values of members
     List::List()
-        : headPtr(nullptr), tailPtr(nullptr), size(0), isSorted(false), keyMkr(0)
-        { }
+        : headPtr(nullptr), tailPtr(nullptr), size(0), isSorted(false), keyMkr(0) { }
 
     // Parametrized constructor sets default values of members, then inserts a new
     // entry into list.
@@ -40,11 +39,14 @@ namespace lomboy_a2 {
 
         // empty list case sets head and tail to new item
         if (headPtr == nullptr) {
+            newItemPtr->setKey(keyMkr++);   // set unique key of item
             headPtr = newItemPtr;
             tailPtr = newItemPtr;
         }
         // insert to head case
         else if (listPtr == headPtr) {
+            newItemPtr->setKey(keyMkr++);   // set unique key of item
+
             // link new item to old head, old head's to new, set head to new
             newItemPtr->setNext(headPtr);
             headPtr->setPrev(newItemPtr);
@@ -52,6 +54,8 @@ namespace lomboy_a2 {
         }
         // insert to tail case
         else if (listPtr == tailPtr) {
+            newItemPtr->setKey(keyMkr++);   // set unique key of item
+
             // link new item to old tail, old tail's to new, set tail to new
             newItemPtr->setPrev(tailPtr);
             tailPtr->setNext(newItemPtr);
@@ -61,6 +65,7 @@ namespace lomboy_a2 {
         else {
             ListItem* nextItemPtr; // points to item AFTER listPtr
             nextItemPtr = listPtr->getNext();
+            newItemPtr->setKey(keyMkr++);   // set unique key of item
 
             // link new item to listPtr and to next
             newItemPtr->setPrev(listPtr);
@@ -81,42 +86,29 @@ namespace lomboy_a2 {
 
     // This is insert method adds new ListItem to head of list.
     void List::insertToHead(const listType& entry) {
-
         insert(entry, headPtr);
-        // ListItem* newItemPtr = new ListItem(entry); // new item has entry data
-
-        // // check for empty list
-        // if (headPtr != nullptr) {
-        //     // link new item to old head, set old head's next to new,
-        //     newItemPtr->setNext(headPtr);
-        //     headPtr->setPrev(newItemPtr);
-        // }
-        // else {
-        //     headPtr = newItemPtr;
-        // }
-        // // set head to new
-        // headPtr = newItemPtr;
-        // size++;
     }
 
-        // This is insert method adds new ListItem to tail of list.
+    // This is insert method adds new ListItem to tail of list.
     void List::insertToTail(const listType& entry) {
-
         insert(entry, tailPtr);
-        // ListItem* newItemPtr = new ListItem(entry); // new item has entry data
+    }
 
-        // // check for empty list
-        // if (headPtr != nullptr) {
-        //     // link new item to old head, set old head's next to new,
-        //     newItemPtr->setNext(headPtr);
-        //     headPtr->setPrev(newItemPtr);
-        // }
-        // else {
-        //     headPtr = newItemPtr;
-        // }
-        // // set head to new
-        // headPtr = newItemPtr;
-        // size++;
+    // FIX - not putting it in middle!
+    // This is insert method adds new ListItem to middle of list.
+    void List::insertToMid(const listType& entry) {
+        ListItem* listPtr = headPtr;    // to go through list
+        int item = 0;      // places to move in list
+
+        while (item < (size / 2)) {
+            listPtr = listPtr->getNext();
+            item++;
+        }
+
+        // insert to middle location, after listPtr
+        insert(entry, listPtr);
+
+        listPtr = nullptr;
     }
 
     // This method deletes item at head.
@@ -144,39 +136,48 @@ namespace lomboy_a2 {
         }
     }
 
-    // // This method deletes item from tail.
-    // void List::removeTail() {
-    //     // check for empty list
-    //     if (size != 0) {
-    //         ListItem* temp = tailPtr;       // temporary to delete item at tail
+    bool List::search(int key) {
+        // ListItem* listPtr = headPtr;    // to traverse through list
 
-    //         // set tailPtr to item before the one to be deleted, set next field to null
-    //         tailPtr = temp->getPrev();
-    //         tailPtr->setNext(nullptr);
+        // // loop over items in list - if matching key found, return true
+        // while (listPtr != nullptr) {
+        //     if (listPtr->getDataKey() == key)
+        //         return true;
 
-    //         delete temp;    // free dynamically-allocated ListItem (previous tail)
-    //         size--;         // list is one item smaller
-    //     }
-    //     else {
-    //         std::cout << "List has no items.\n";
-    //     }
-    // }
+        //     listPtr = listPtr->getNext();   // to move to next item
+        // }
 
-    // // This method deletes item from list with data matching the argument.
-    // void List::remove(listType data) {
+        // return false;
 
-    // }
+        ListItem* itemPtr;      // to point to found item
+        itemPtr = find(key);    // if found, returns pointer to item. if not, nullptr
+
+        if (itemPtr != nullptr)
+            return true;
+
+        return false;                               
+    }
 
     // displays list contents as linked list!
     void List::traverse() {
         ListItem* listPtr = headPtr;
 
+        // iterate through to show data fields of items
+        cout << "START->";
         while (listPtr != nullptr) {
-            // cout << "(" << listPtr->getDataKey() << ") "
             cout << listPtr->getData() << "->";
             listPtr = listPtr->getNext();
         }
         cout << "END\n";
+
+        // iterate through again to show keys
+        listPtr = headPtr;
+        cout << "KEY:   ";
+        while (listPtr != nullptr) {
+            cout << "(" << listPtr->getDataKey() << ")  ";
+            listPtr = listPtr->getNext();
+        }
+        cout << endl;
 
         listPtr = nullptr;
     }
@@ -188,9 +189,27 @@ namespace lomboy_a2 {
             removeHead();
     }
 
+    // This helper function searches through list for an item with a matching key,
+    // then returns a pointer to the item.
+    ListItem* List::find(int key) {
+        ListItem* listPtr = headPtr;    // start at beginning of list
+
+        // iterate over all items in list until end reached or item found
+        while (listPtr != nullptr) {
+            if (listPtr->getDataKey() == key)
+                return listPtr;
+
+            listPtr = listPtr->getNext();   // move to next item in list
+        }
+
+        // this only executes if search failed
+        listPtr = nullptr;
+        return listPtr;
+    }
+
+
     // Friend function: Overloaded outstream operator
     // Displays contents of Linked List
-
     // Assumes listDataType can be outputted to console (or has outstream capabilities) and
     // that listDataType has getData member function.
     ostream& operator<<(ostream& out, const List& l){
@@ -201,10 +220,12 @@ namespace lomboy_a2 {
                 cout << "Item Data: " << *listPtr << endl;
                 listPtr = listPtr->getNext();
             }
+
             cout << "END\n";
 
             out << "headPtr: " << l.headPtr->getData() << endl;
             out << "tailPtr: " << l.tailPtr->getData() << endl;
+            out << "size: " << l.getSize() << endl;
 
             listPtr = nullptr;
         }

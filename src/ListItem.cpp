@@ -21,8 +21,8 @@ namespace lomboy_a2 {
     ListItem::ListItem(listDataType ldt, ListItem* nextItem)
         : data(ldt), nextPtr(nextItem), prevPtr(nullptr) { }
 
-    // Copy constructor copies data value from another ListItem object, but NOT its
-    // pointers! It sets nextPtr and prevPtr fields to nullptr
+    // Copy constructor copies data value (and key via copy assignment) from another 
+    // ListItem, but NOT its pointers! It sets nextPtr and prevPtr fields to nullptr
     ListItem::ListItem(const ListItem& li) {
         data = li.getData();
         nextPtr = nullptr;
@@ -40,6 +40,11 @@ namespace lomboy_a2 {
     // copy assignment).
     void ListItem::set(const listDataType& ldt) {
         data = ldt;
+    }
+
+    // This method sets only the key field of the data.
+    void ListItem::setKey(int key) {
+        data.setKey(key);
     }
 
     // This method sets nextPtr field (pointer to next ListItem) to the argument provided.
@@ -68,7 +73,7 @@ namespace lomboy_a2 {
     // Assumes listDataType can be outputted to console (or has outstream capabilities) and
     // that listDataType has getData member function.
     ostream& operator<<(ostream& out, const ListItem& li){
-        out << li.getData() << endl;
+        out << li.getData() << " (" << li.getDataKey() << ")" << endl;
 
         // check for nullptr to avoid seg fault
         if (li.nextPtr == nullptr)

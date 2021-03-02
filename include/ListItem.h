@@ -22,6 +22,7 @@ namespace lomboy_a2 {
         // ~ListItem();    // no need?
         // modification methods
         void set(const listDataType& ldt);
+        void setKey(int key);
         // void setKey(const listDataType& ldt);  // no need?
         void setNext(ListItem* nextPtr);
         void setPrev(ListItem* prevPtr);

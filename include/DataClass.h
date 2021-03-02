@@ -34,6 +34,7 @@ namespace lomboy_a2 {
         dataType data;
         int key;
     };
+    
 }
 
 #endif

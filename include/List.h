@@ -8,7 +8,6 @@
 
 #include "DataClass.h"    // header file for ListItem class
 #include "ListItem.h"    // header file for ListItem class
-// #include "List.h"       // header file for ListItem class
 #include <iostream>
 namespace lomboy_a2 {
 
@@ -24,12 +23,13 @@ namespace lomboy_a2 {
         // Destructor
         ~List();
         // Modification methods
-        void insertToHead(const listType&);
-        void insertToTail(const listType&);
-        // void insertToMid(listType);
-        // void remove(listType);
+        void insertToHead(const listType& entry);
+        void insertToTail(const listType& entry);
+        void insertToMid(const listType& entry);
+        // void remove(int key);
         void removeHead();
-        // bool search(listType);
+        // bool search(const listType& item);
+        bool search(int key);
         // void sortAsc();            // selection sort
         // void sortDesc();
         void traverse();            // displays list contents as linked list!
@@ -38,7 +38,9 @@ namespace lomboy_a2 {
         // listType getNext();        // get item after iterator()
         // bool hasNext();
         // Constant methods
+        int getSize() const { return size; };
         bool isOrdered() const { return isSorted; };
+        // int keyMkrCurrent() const { return keyMkr; };
         // listType start();
         // Overloaded Operators
         // List& operator=(const List& l);    // use deep copy
@@ -47,13 +49,13 @@ namespace lomboy_a2 {
     private:
         // Helper functions
         void insert(const listType&, ListItem*);
-
+        ListItem* find(int key);
         // Member variables
         ListItem* headPtr;
         ListItem* tailPtr;
         int size;
         bool isSorted;
-        int keyMkr;      // generate a key!
+        int keyMkr;             // generate a unique key for list item
     };
 
 }
