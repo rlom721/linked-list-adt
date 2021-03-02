@@ -88,7 +88,7 @@ int main () {
     tList.traverse();
     cout << endl;
 
-    tList.insert(dc1);
+    tList.insertToTail(dc1);
     cout << "inserted data: " << dc1 << endl;
     tList.traverse();
     cout << endl;
@@ -103,8 +103,13 @@ int main () {
     cout << "added to head: " << dc2 << " and " << dc3 << endl << endl;
     tList.traverse();
     cout << endl;
-
     cout << tList << endl;
+
+    List t2List(dc);
+
+    cout << t2List << endl;
+    t2List.insertToTail(dc1);
+    cout << t2List << endl;
 
     return 0;
 }

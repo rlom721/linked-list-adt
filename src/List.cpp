@@ -15,7 +15,7 @@ namespace lomboy_a2 {
     // entry into list.
     List::List(listType data)
         : headPtr(nullptr), tailPtr(nullptr), size(0), isSorted(false), keyMkr(0) {
-        insert(data);
+        insertToTail(data);
     }
 
     // Copy constructor performs deep copy by copying data of elements into ListItems
@@ -33,40 +33,90 @@ namespace lomboy_a2 {
         clearList();
     }
 
-    // This is the default insert method, which adds new ListItem to tail of list.
-    void List::insert(const listType& entry) {
+    // This is a helper function for insert methods, which adds new ListItem to 
+    // list based on location of listPtr.
+    void List::insert(const listType& entry, ListItem* listPtr) {
         ListItem* newItemPtr = new ListItem(entry); // new item has entry data
 
-        // check for empty list
-        if (headPtr != nullptr) {
-            // link new item to old tail, set old tail's next to new,
-            newItemPtr->setPrev(tailPtr);
-            tailPtr->setNext(newItemPtr);
+        // empty list case sets head and tail to new item
+        if (headPtr == nullptr) {
+            headPtr = newItemPtr;
+            tailPtr = newItemPtr;
         }
-        else {
+        // insert to head case
+        else if (listPtr == headPtr) {
+            // link new item to old head, old head's to new, set head to new
+            newItemPtr->setNext(headPtr);
+            headPtr->setPrev(newItemPtr);
             headPtr = newItemPtr;
         }
-        // set tail to new
-        tailPtr = newItemPtr;
+        // insert to tail case
+        else if (listPtr == tailPtr) {
+            // link new item to old tail, old tail's to new, set tail to new
+            newItemPtr->setPrev(tailPtr);
+            tailPtr->setNext(newItemPtr);
+            tailPtr = newItemPtr;
+        }
+        // insert to middle case
+        else {
+            ListItem* nextItemPtr; // points to item AFTER listPtr
+            nextItemPtr = listPtr->getNext();
+
+            // link new item to listPtr and to next
+            newItemPtr->setPrev(listPtr);
+            newItemPtr->setNext(nextItemPtr);
+            
+            // link listPtr to new and next to new
+            listPtr->setNext(newItemPtr);
+            nextItemPtr->setPrev(newItemPtr);
+
+            // to prevent dangling pointer!
+            nextItemPtr = nullptr;
+        }
+
+        // increment listPtr and prevent a dangling pointer!
         size++;
+        listPtr = nullptr;
     }
 
     // This is insert method adds new ListItem to head of list.
     void List::insertToHead(const listType& entry) {
-        ListItem* newItemPtr = new ListItem(entry); // new item has entry data
 
-        // check for empty list
-        if (headPtr != nullptr) {
-            // link new item to old head, set old head's next to new,
-            newItemPtr->setNext(headPtr);
-            headPtr->setPrev(newItemPtr);
-        }
-        else {
-            headPtr = newItemPtr;
-        }
-        // set head to new
-        headPtr = newItemPtr;
-        size++;
+        insert(entry, headPtr);
+        // ListItem* newItemPtr = new ListItem(entry); // new item has entry data
+
+        // // check for empty list
+        // if (headPtr != nullptr) {
+        //     // link new item to old head, set old head's next to new,
+        //     newItemPtr->setNext(headPtr);
+        //     headPtr->setPrev(newItemPtr);
+        // }
+        // else {
+        //     headPtr = newItemPtr;
+        // }
+        // // set head to new
+        // headPtr = newItemPtr;
+        // size++;
+    }
+
+        // This is insert method adds new ListItem to tail of list.
+    void List::insertToTail(const listType& entry) {
+
+        insert(entry, tailPtr);
+        // ListItem* newItemPtr = new ListItem(entry); // new item has entry data
+
+        // // check for empty list
+        // if (headPtr != nullptr) {
+        //     // link new item to old head, set old head's next to new,
+        //     newItemPtr->setNext(headPtr);
+        //     headPtr->setPrev(newItemPtr);
+        // }
+        // else {
+        //     headPtr = newItemPtr;
+        // }
+        // // set head to new
+        // headPtr = newItemPtr;
+        // size++;
     }
 
     // This method deletes item at head.
@@ -145,8 +195,18 @@ namespace lomboy_a2 {
     // that listDataType has getData member function.
     ostream& operator<<(ostream& out, const List& l){
         if (l.headPtr != nullptr && l.tailPtr != nullptr) {
+            ListItem* listPtr = l.headPtr;
+
+            while (listPtr != nullptr) {
+                cout << "Item Data: " << *listPtr << endl;
+                listPtr = listPtr->getNext();
+            }
+            cout << "END\n";
+
             out << "headPtr: " << l.headPtr->getData() << endl;
             out << "tailPtr: " << l.tailPtr->getData() << endl;
+
+            listPtr = nullptr;
         }
         else
             out << "headPtr and tailPtr are nullptr\n";

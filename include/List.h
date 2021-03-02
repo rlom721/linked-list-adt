@@ -24,8 +24,8 @@ namespace lomboy_a2 {
         // Destructor
         ~List();
         // Modification methods
-        void insert(const listType&);       // default inserts new ListItem to tail
         void insertToHead(const listType&);
+        void insertToTail(const listType&);
         // void insertToMid(listType);
         // void remove(listType);
         void removeHead();
@@ -45,6 +45,9 @@ namespace lomboy_a2 {
         // Friend functions
         friend std::ostream& operator<<(std::ostream& out, const List& l);
     private:
+        // Helper functions
+        void insert(const listType&, ListItem*);
+
         // Member variables
         ListItem* headPtr;
         ListItem* tailPtr;
