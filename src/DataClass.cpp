@@ -2,19 +2,20 @@
 // implementation file for DataClass class
 
 #include "DataClass.h"    // header file for DataClass class
-#include <iostream>     
+#include <iostream>
 using namespace std;
 namespace lomboy_a2 {
-  // Default constructor uses default constructor of data type to set 
+  // Default constructor uses default constructor of data type to set
   // default value for data
   DataClass::DataClass() : data(dataType()) { }
 
   // Parametrized constructor sets argument value for data
   DataClass::DataClass(dataType data) : data(data) { }
 
-  // Copy constructor copies data value of another DataClass object
+  // Copy constructor copies data AND key value of another DataClass object
   DataClass::DataClass(const DataClass& dc) {
     data = dc.data;
+    key = dc.key;
   }
 
   // This method sets data value based on argument provided.
@@ -28,11 +29,12 @@ namespace lomboy_a2 {
     this->key = key;
   }
 
-  // Overloaded copy assignment 
-  // This copies data from another DataClass object.
+  // Overloaded copy assignment
+  // This copies data AND key from another DataClass object.
   DataClass& DataClass::operator=(const DataClass& dc){
     if (this != &dc) {
       data = dc.data;
+      key = dc.key;
     }
 
     return *this;

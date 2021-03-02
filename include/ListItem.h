@@ -6,9 +6,9 @@
 #define LISTITEM_H
 
 #include "DataClass.h"    // header file for ListItem class
-#include "ListItem.h"    // header file for ListItem class
 #include <iostream>
 namespace lomboy_a2 {
+
     class ListItem {
     public:
         // typedef
@@ -19,9 +19,10 @@ namespace lomboy_a2 {
         ListItem(listDataType ldt, ListItem* nextItem); // parametrized (may remove...)
         ListItem(const ListItem& li); // copy
         // destructor
-        // ~ListItem();    // no need?              
+        // ~ListItem();    // no need?
         // modification methods
-        void setData(const listDataType& ldt);
+        void set(const listDataType& ldt);
+        // void setKey(const listDataType& ldt);  // no need?
         void setNext(ListItem* nextPtr);
         void setPrev(ListItem* prevPtr);
         ListItem* getNext() { return nextPtr; }
@@ -38,6 +39,7 @@ namespace lomboy_a2 {
         ListItem* nextPtr;
         ListItem* prevPtr;
     };
+
 }
 
 #endif

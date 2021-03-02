@@ -2,26 +2,26 @@
 // implementation file for ListItem class
 
 #include "ListItem.h"    // header file for ListItem class
-#include <iostream>       
+#include <iostream>
 using namespace std;
 
 namespace lomboy_a2 {
-    // Default constructor uses default constructor of listDataType to set default value 
+    // Default constructor uses default constructor of listDataType to set default value
     // for data field, then sets nextPtr field to nullptr
-    ListItem::ListItem() 
-        : data(listDataType()), nextPtr(nullptr), prevPtr(nullptr) { }   
+    ListItem::ListItem()
+        : data(listDataType()), nextPtr(nullptr), prevPtr(nullptr) { }
 
-    // Parametrized constructor takes argument of listDataType and sets data field to it, 
+    // Parametrized constructor takes argument of listDataType and sets data field to it,
     // then sets nextPtr and prevPtr fields to nullptr
-    ListItem::ListItem(listDataType ldt) 
-        : data(ldt), nextPtr(nullptr), prevPtr(nullptr) { }   
+    ListItem::ListItem(listDataType ldt)
+        : data(ldt), nextPtr(nullptr), prevPtr(nullptr) { }
 
-    // Parametrized constructor sets data and nextPtr fields to arguments then sets prevPtr 
+    // Parametrized constructor sets data and nextPtr fields to arguments then sets prevPtr
     // pointer to nullptr.
-    ListItem::ListItem(listDataType ldt, ListItem* nextItem) 
-        : data(ldt), nextPtr(nextItem), prevPtr(nullptr) { }   
+    ListItem::ListItem(listDataType ldt, ListItem* nextItem)
+        : data(ldt), nextPtr(nextItem), prevPtr(nullptr) { }
 
-    // Copy constructor copies data value from another ListItem object, but NOT its 
+    // Copy constructor copies data value from another ListItem object, but NOT its
     // pointers! It sets nextPtr and prevPtr fields to nullptr
     ListItem::ListItem(const ListItem& li) {
         data = li.getData();
@@ -36,8 +36,9 @@ namespace lomboy_a2 {
     //     prevPtr = nullptr;
     // }
 
-    // This method sets the data field to the argument provided.
-    void ListItem::setData(const listDataType& ldt) {
+    // This method sets the data AND key field to the argument provided (via
+    // copy assignment).
+    void ListItem::set(const listDataType& ldt) {
         data = ldt;
     }
 
@@ -51,8 +52,8 @@ namespace lomboy_a2 {
         this->prevPtr = prevPtr;
     }
 
-    // Overloaded copy assignment 
-    // This method copies data value from another ListItem object, but NOT its pointers! 
+    // Overloaded copy assignment
+    // This method copies data value from another ListItem object, but NOT its pointers!
     ListItem& ListItem::operator=(const ListItem& li) {
         // check for self-assignment
         if (this != &li) {
@@ -79,8 +80,8 @@ namespace lomboy_a2 {
             out << "\nprevPtr is nullptr" << endl;
         else
             out << "\nprevPtr " << li.prevPtr->getData() << endl;
-        
+
         return out;
     }
-    
+
 }

@@ -20,8 +20,8 @@ namespace lomboy_a2 {
         void set(dataType data);
         void setKey(int key);
         // constant methods
-        int getKey() const { return key; }
         dataType get() const { return data; }
+        int getKey() const { return key; }
         // overloaded operators
         DataClass& operator=(const DataClass& dc);
         // friend functions

@@ -8,17 +8,17 @@ namespace lomboy_a2 {
 
     // Default constructor sets default values of members
     List::List()
-        : headPtr(nullptr), tailPtr(nullptr), size(0), isSorted(false) { }  
+        : headPtr(nullptr), tailPtr(nullptr), size(0), isSorted(false) { }
 
     // Parametrized constructor sets default values of members, then inserts a new
     // entry into list.
     List::List(listType data)
-        : headPtr(nullptr), tailPtr(nullptr), size(0), isSorted(false) { 
+        : headPtr(nullptr), tailPtr(nullptr), size(0), isSorted(false) {
         insert(data);
     }  
 
     // Copy constructor performs deep copy by copying data of elements into ListItems
-    // of a NEW location (so pointers don't point to original) 
+    // of a NEW location (so pointers don't point to original)
     List::List(const List& l) {
         // for empty list
         if (l.headPtr == nullptr)
@@ -62,15 +62,15 @@ namespace lomboy_a2 {
             headPtr = temp->getNext();
 
             // check if list has more than one item
-            if (headPtr != nullptr) 
+            if (headPtr != nullptr)
                 headPtr->setPrev(nullptr);
-            else    
+            else
                 tailPtr = nullptr;
 
             // free dynamically-allocated ListItem (previous head)
-            delete temp;     
+            delete temp;
             size--;
-        } 
+        }
         else {
             std::cout << "List has no items.\n";
         }
@@ -117,7 +117,7 @@ namespace lomboy_a2 {
         // remove each item in list starting at head until list is empty
         while (headPtr != nullptr)
             removeHead();
-    }     
+    }
 
     // Friend function: Overloaded outstream operator
     // Displays contents of Linked List
@@ -129,7 +129,7 @@ namespace lomboy_a2 {
             out << "headPtr: " << l.headPtr->getData() << endl;
             out << "tailPtr: " << l.tailPtr->getData() << endl;
         }
-        else 
+        else
             out << "headPtr and tailPtr are nullptr\n";
 
         return out;
