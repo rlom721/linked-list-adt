@@ -120,12 +120,27 @@ int main () {
     tList.traverse();
     cout << endl;
 
+    tList.insertToMid(dc1);
+    cout << "Inserted to mid\n";
+    tList.traverse();
+    cout << endl;
+
+    // tList.insertToMid(dc2);
+    // cout << "Inserted to mid\n";
+    // tList.traverse();
+    // cout << endl;
+    cout << "List size: " << tList.getSize() << endl;
+
     cout << "Testing search method:\n";
     cout << "Looking for key of 0... " << tList.search(0) << endl;
     cout << "Looking for key of 4... " << tList.search(4) << endl;
     cout << "Looking for key of 7... " << tList.search(7) << endl;
     cout << "Looking for key of 3... " << tList.search(3) << endl;
     cout << "Looking for key of 2... " << tList.search(2) << endl;
+
+    tList.traverse();
+    tList.sortAsc();
+    tList.traverse();
 
     // cout << tList << endl;
 

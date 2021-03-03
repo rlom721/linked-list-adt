@@ -27,7 +27,7 @@ namespace lomboy_a2 {
         void setNext(ListItem* nextPtr);
         void setPrev(ListItem* prevPtr);
         ListItem* getNext() { return nextPtr; }
-        ListItem* getPrev() { return prevPtr; }
+        ListItem* getPrev() { return prevPtr; }        
         // constant methods
         listDataType getData() const { return data; }
         int getDataKey() const { return data.getKey(); }
