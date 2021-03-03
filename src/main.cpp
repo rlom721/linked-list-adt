@@ -138,8 +138,14 @@ int main () {
     cout << "Looking for key of 3... " << tList.search(3) << endl;
     cout << "Looking for key of 2... " << tList.search(2) << endl;
 
+    cout << "Sorting in ascending order...\n";
     tList.traverse();
     tList.sortAsc();
+    tList.traverse();
+
+    cout << "\nSorting in descending order...\n";
+    tList.traverse();
+    tList.sortDesc();
     tList.traverse();
 
     // cout << tList << endl;

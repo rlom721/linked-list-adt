@@ -34,7 +34,7 @@ namespace lomboy_a2 {
         // bool search(const listType& item);       // may delete...
         bool search(int key);
         void sortAsc();            // selection sort
-        // void sortDesc();
+        void sortDesc();
         void traverse();            // displays list contents as linked list!
         void clearList();
         // listType iterator();        // like a pointer for a list, but only ret data
@@ -53,6 +53,7 @@ namespace lomboy_a2 {
         // Helper functions
         void insert(const listType&, ListItem*);
         ListItem* find(int key);
+        // void sort(bool isAscending);            // selection sort
         void swapItems(ListItem& li1, ListItem& li2);
         // Member variables
         ListItem* headPtr;

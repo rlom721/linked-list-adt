@@ -200,8 +200,6 @@ namespace lomboy_a2 {
     void List::sortAsc() {
         ListItem* item1ptr = headPtr;             // traverse through inner loop
         ListItem* item2ptr = headPtr->getNext();  // traverse through outer loop
-        // ListItem* item1swap = nullptr;  // swap item in inner loop
-        // ListItem* item2swap = nullptr;  // swap item in outer loop
         int outCount = 0,       // outer loop count (1st item)
             inCount = 0;        // inner loop count (2nd item)
 
@@ -212,13 +210,36 @@ namespace lomboy_a2 {
             item2ptr = item1ptr->getNext();     
             while (item2ptr != nullptr && inCount < size) {
                 // item2ptr's data is less, so swap data and key
-                if (item2ptr->getData() < item1ptr->getData()) {
-                    // item1swap = item1ptr;
-                    // item2swap = item2ptr;
-
-                    // SWAP data and key
+                if (item2ptr->getData() < item1ptr->getData())
                     swapItems(*item1ptr, *item2ptr);
-                }
+
+                item2ptr = item2ptr->getNext(); // point to next item
+                inCount++;
+            }
+            item1ptr = item1ptr->getNext(); // point to next item
+            outCount++;
+        }
+        // prevent dangling pointers!
+        item1ptr = nullptr;
+        item2ptr = nullptr;
+    }
+    // This method implements the selection sort algorithm to sort items in list.
+    void List::sortDesc() {
+        ListItem* item1ptr = headPtr;             // traverse through inner loop
+        ListItem* item2ptr = headPtr->getNext();  // traverse through outer loop
+        int outCount = 0,       // outer loop count (1st item)
+            inCount = 0;        // inner loop count (2nd item)
+
+        // outer loop controls iterations of first item value to compare
+        // inner loop compares rest of list values to first each iteration
+        while (item1ptr != nullptr && outCount < size - 1) {
+            // move inner loop pointer back to right after item1ptr
+            item2ptr = item1ptr->getNext();     
+            while (item2ptr != nullptr && inCount < size) {
+                // item2ptr's data is less, so swap data and key
+                if (item2ptr->getData() > item1ptr->getData())
+                    swapItems(*item1ptr, *item2ptr);
+
                 item2ptr = item2ptr->getNext(); // point to next item
                 inCount++;
             }
@@ -238,41 +259,6 @@ namespace lomboy_a2 {
         li2 = li1;
         li1 = temp;
     }
-
-    // This method implements the selection sort algorithm to sort items in 
-    // list in descending order.
-    void List::sortAsc() {
-        ListItem* item1ptr = headPtr;             // traverse through inner loop
-        ListItem* item2ptr = headPtr->getNext();  // traverse through outer loop
-        // ListItem* item1swap = nullptr;  // swap item in inner loop
-        // ListItem* item2swap = nullptr;  // swap item in outer loop
-        int outCount = 0,       // outer loop count (1st item)
-            inCount = 0;        // inner loop count (2nd item)
-
-        // outer loop controls iterations of first item value to compare
-        // inner loop compares rest of list values to first each iteration
-        while (item1ptr != nullptr && outCount < size - 1) {
-            // move inner loop pointer back to right after item1ptr
-            item2ptr = item1ptr->getNext();     
-            while (item2ptr != nullptr && inCount < size) {
-                // item2ptr's data is less, so swap data and key
-                if (item2ptr->getData() < item1ptr->getData()) {
-                    // item1swap = item1ptr;
-                    // item2swap = item2ptr;
-
-                    // SWAP data and key
-                    swapItems(*item1ptr, *item2ptr);
-                }
-                item2ptr = item2ptr->getNext(); // point to next item
-                inCount++;
-            }
-            item1ptr = item1ptr->getNext(); // point to next item
-            outCount++;
-        }
-        // prevent dangling pointers!
-        item1ptr = nullptr;
-        item2ptr = nullptr;
-    }      
 
     // displays list contents as linked list!
     void List::traverse() {
