@@ -26,7 +26,7 @@ namespace lomboy_a2 {
         void insertToHead(const listType& entry);
         void insertToTail(const listType& entry);
         void insertToMid(const listType& entry);
-        // void remove(int key);
+        void remove(int key);
         void removeHead();
         // bool search(const listType& item);
         bool search(int key);
