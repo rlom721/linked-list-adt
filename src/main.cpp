@@ -115,6 +115,11 @@ int main () {
     tList.traverse();
     cout << endl;
 
+    tList.removeTail();
+    cout << "Removed tail\n";
+    tList.traverse();
+    cout << endl;
+
     cout << "Testing search method:\n";
     cout << "Looking for key of 0... " << tList.search(0) << endl;
     cout << "Looking for key of 4... " << tList.search(4) << endl;

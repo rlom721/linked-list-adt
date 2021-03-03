@@ -46,16 +46,39 @@ namespace lomboy_a2 {
     // This is insert method adds new ListItem to middle of list.
     void List::insertToMid(const listType& entry) {
         ListItem* listPtr = headPtr;    // to go through list
+        ListItem* newItemPtr = new ListItem(entry); // new item has entry data
+
+        newItemPtr->setKey(keyMkr++);   // set unique key of item
+
         int item = 0;      // places to move in list
 
-        while (item < (size / 2)) {
+        // empty list case sets head and tail to new item
+        if (headPtr == nullptr) {
+            headPtr = newItemPtr;
+            tailPtr = newItemPtr;
+        }
+
+        while (item < ((size - 1) / 2)) {
             listPtr = listPtr->getNext();
             item++;
         }
 
         // insert to middle location, after listPtr
-        insert(entry, listPtr);
+        ListItem* nextItemPtr;      // points to item AFTER listPtr
+        nextItemPtr = listPtr->getNext();
 
+        // link new item to listPtr and to next
+        newItemPtr->setPrev(listPtr);
+        newItemPtr->setNext(nextItemPtr);
+        
+        // link listPtr to new and next to new
+        listPtr->setNext(newItemPtr);
+        nextItemPtr->setPrev(newItemPtr);
+
+        size++;
+
+        // to prevent dangling pointer!
+        nextItemPtr = nullptr;
         listPtr = nullptr;
     }
 
@@ -150,6 +173,17 @@ namespace lomboy_a2 {
         // }
     }
 
+    // This method deletes item at tail.
+    // Works for empty list and one list item cases.
+    void List::removeTail() {
+        int tailKey = -1;
+
+        if (tailPtr != nullptr)
+            tailKey = tailPtr->getDataKey();    // to use with remove function
+
+        if (tailKey != -1) remove(tailKey);
+    }
+
     // This method searches through the list for a matching key, returning true if 
     // found and false if not.
     bool List::search(int key) {
@@ -193,20 +227,21 @@ namespace lomboy_a2 {
             removeHead();
     }
 
-    // This is a helper function for insert methods, which adds new ListItem to 
-    // list based on location of listPtr.
+    // This is a helper function for insert to tail and head methods, which 
+    // adds new ListItem to list based on location of listPtr.
     void List::insert(const listType& entry, ListItem* listPtr) {
         ListItem* newItemPtr = new ListItem(entry); // new item has entry data
 
+        newItemPtr->setKey(keyMkr++);   // set unique key of item
+
         // empty list case sets head and tail to new item
         if (headPtr == nullptr) {
-            newItemPtr->setKey(keyMkr++);   // set unique key of item
             headPtr = newItemPtr;
             tailPtr = newItemPtr;
         }
         // insert to head case
         else if (listPtr == headPtr) {
-            newItemPtr->setKey(keyMkr++);   // set unique key of item
+            cout << "Inserting to head...\n";
 
             // link new item to old head, old head's to new, set head to new
             newItemPtr->setNext(headPtr);
@@ -215,34 +250,18 @@ namespace lomboy_a2 {
         }
         // insert to tail case
         else if (listPtr == tailPtr) {
-            newItemPtr->setKey(keyMkr++);   // set unique key of item
+            cout << "Inserting to tail...\n";
 
             // link new item to old tail, old tail's to new, set tail to new
             newItemPtr->setPrev(tailPtr);
             tailPtr->setNext(newItemPtr);
             tailPtr = newItemPtr;
         }
-        // insert to middle case
-        else {
-            ListItem* nextItemPtr; // points to item AFTER listPtr
-            nextItemPtr = listPtr->getNext();
-            newItemPtr->setKey(keyMkr++);   // set unique key of item
-
-            // link new item to listPtr and to next
-            newItemPtr->setPrev(listPtr);
-            newItemPtr->setNext(nextItemPtr);
-            
-            // link listPtr to new and next to new
-            listPtr->setNext(newItemPtr);
-            nextItemPtr->setPrev(newItemPtr);
-
-            // to prevent dangling pointer!
-            nextItemPtr = nullptr;
-        }
 
         // increment listPtr and prevent a dangling pointer!
         size++;
         listPtr = nullptr;
+        newItemPtr = nullptr;
     }
 
     // This helper function searches through list for an item with a matching key,

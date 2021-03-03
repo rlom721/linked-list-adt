@@ -15,6 +15,8 @@ namespace lomboy_a2 {
     public:
         // typedef
         typedef ListItem::listDataType listType;    // List depends on data type of ListItem
+        // typedef ListItem* iterator;              // make iterator class??
+        // typedef const ListItem* iterator;
         // Constructors
         List();
         List(listType data);
@@ -28,6 +30,7 @@ namespace lomboy_a2 {
         void insertToMid(const listType& entry);
         void remove(int key);
         void removeHead();
+        void removeTail();
         // bool search(const listType& item);
         bool search(int key);
         // void sortAsc();            // selection sort
