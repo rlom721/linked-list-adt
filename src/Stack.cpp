@@ -1,7 +1,6 @@
 
 #include "List.h"        // header file for List class
 #include "Stack.h"        // header file for List class
-// #include "DataClass.h"
 #include <iostream>
 #include <fstream>      // for writing files
 using namespace std;

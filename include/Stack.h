@@ -29,7 +29,6 @@ namespace lomboy_a2 {
         void GenStackStubResults();      // shows functionality of List class
         void GenStackStubReport();
     private:
-
         // member variables
         int size;
     };
