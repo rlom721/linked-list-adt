@@ -18,14 +18,12 @@ namespace lomboy_a2 {
         Stack(stackDataType& entry);
         Stack(const Stack&);    // copy
         ~Stack();
-        // Destructor
-        // needed?
         // Modification methods
         void push(stackDataType& entry);
         stackDataType pop();
         // Constant methods
-        bool isEmpty();
-        bool isFull();
+        bool isEmpty() { return getSize(); }
+        // bool isFull();
         stackDataType showTop();
     private:
         int size;

@@ -4,6 +4,7 @@
 #include "ListItem.h"
 #include "List.h"
 #include "Stack.h"
+#include "Queue.h"
 using namespace std;
 using namespace lomboy_a2;
 
@@ -85,10 +86,11 @@ int main () {
     tList.sortDesc();
     tList.traverse();
 
+    // testing Stack
     DataClass s0(0.1), s1(0.2), s3(0.3), s4;
     Stack sTest(s0);
 
-    cout << "\n\nShowing Stack!\n";
+    cout << "\nShowing Stack!\n";
     sTest.traverse();
 
     sTest.push(s1);
@@ -99,6 +101,33 @@ int main () {
 
     cout << "Popped data " << s4 << " off stack!\n";
     sTest.traverse();
+
+    // testing Queue
+    Queue qTest(s0);
+
+    cout << "\nShowing Queue!\n";
+    qTest.traverse();
+
+    qTest.enqueue(s1);
+    qTest.traverse();
+
+    s4 = qTest.dequeue();
+
+    cout << "Popped data " << s4 << " off queue!\n";
+    qTest.traverse();
+
+    cout << "Adding items...\n";
+    qTest.enqueue(s3);
+    qTest.enqueue(s4);
+    qTest.traverse();
+
+    cout << "Sorting in ascending order...\n";
+    qTest.sort();
+    qTest.traverse();
+
+    cout << "Sorting in descending order...\n";
+    qTest.sortDesc();
+    qTest.traverse();
 
     return 0;
 }
