@@ -42,4 +42,10 @@ namespace lomboy_a2 {
     void Queue::sortDsc() {
         sortDesc();
     }
+
+    // This method searches for item with matching key in queue.
+    bool Queue::searchQ(int key) {
+        return search(key);
+    }
+
 }

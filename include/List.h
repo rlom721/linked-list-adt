@@ -47,6 +47,7 @@ namespace lomboy_a2 {
         // Constant methods
         listType getFirstData() const { return headPtr->getData(); };
         listType getLastData() const { return tailPtr->getData(); };
+        listType getData(int key);
         int getSize() const { return size; };
         bool isOrdered() const { return isSorted; };
         // listType start(); 

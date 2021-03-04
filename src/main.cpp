@@ -129,5 +129,13 @@ int main () {
     qTest.sortDesc();
     qTest.traverse();
 
+    // add bounds checking
+    cout << "Testing search method:\n";
+    cout << "Looking for key of 0... " << qTest.searchQ(0) << endl;
+    cout << "Looking for key of 4... " << qTest.searchQ(4) << endl;
+    cout << "Looking for key of 7... " << qTest.searchQ(7) << endl;
+    cout << "Looking for key of 3... " << qTest.searchQ(3) << endl;
+    cout << "Looking for key of 2... " << qTest.searchQ(2) << endl;
+
     return 0;
 }

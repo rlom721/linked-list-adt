@@ -25,7 +25,7 @@ namespace lomboy_a2 {
         void sort();            // default sorts ascending
         void sortDsc();
         // Constant methods
-        bool search(int key);
+        bool searchQ(int key);
         bool isEmpty() { return getSize(); }
         // bool isFull();
     private:

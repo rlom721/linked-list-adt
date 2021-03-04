@@ -291,6 +291,12 @@ namespace lomboy_a2 {
             removeHead();
     }
 
+    // This method searches for an item with a matching key and returns its data.
+    List::listType List::getData(int key) {
+        ListItem* item = find(key);
+        return item->getData();
+    }
+
     // This is a helper function for insert to tail and head methods, which 
     // adds new ListItem to list based on location of listPtr.
     void List::insert(const listType& entry, ListItem* listPtr) {
