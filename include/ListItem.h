@@ -31,9 +31,11 @@ namespace lomboy_a2 {
         // constant methods
         listDataType getData() const { return data; }
         int getDataKey() const { return data.getKey(); }
+        // const ListItem* getNext() { return nextPtr; }
+        // const ListItem* getPrev() { return prevPtr; }  
         // overloaded operators
         ListItem& operator=(const ListItem& li);
-        // friend function
+        // friend functions
         friend std::ostream& operator<<(std::ostream& out, const ListItem& li);
     private:
         // member variables
