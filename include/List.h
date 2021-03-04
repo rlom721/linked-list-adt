@@ -6,25 +6,19 @@
 #ifndef LIST_H
 #define LIST_H
 
-// #include "DataClass.h"    // header file for ListItem class
 #include "ListItem.h"    // header file for ListItem class
 #include <iostream>
 namespace lomboy_a2 {
 
-    // // forward-declare Iterator to be used by List ??
-    // class Iterator;
-
     class List {
     public:
         // typedef
+        typedef ListItem itemType;      // for iterator
         typedef ListItem::listDataType listType;    // List depends on data type of ListItem
-        // typedef ListItem* iterator;              // make iterator class??
-        // typedef const ListItem* iterator;
-        // typedef Iterator iterator;
+        // typedef Iterator iterator;  // so user can instantiate like: List::iterator
         // Constructors
         List();
         List(listType data);
-        // List(ListItem)        // may remove...
         List(const List& l);    // use deep copy - do NOT copy pointers!
         // Destructor
         ~List();
@@ -35,34 +29,32 @@ namespace lomboy_a2 {
         void remove(int key);
         void removeHead();
         void removeTail();
-        // bool search(const listType& item);       // may delete...
         bool search(int key);
         void sortAsc();            // selection sort
         void sortDesc();
-        void traverse();            // displays list contents as linked list!
+        void iterate();            // displays list contents as linked list!
         void clearList();
-        // listType iterator();        // like a pointer for a list, but only ret data
+        // Iterator start() { return headPtr; } 
+        // Iterator end() { return tailPtr; } 
         // listType getNext();        // get item after iterator()
         // bool hasNext();
+        void GenStubResults();      // shows functionality of List class
+        void GenStubReport();
         // Constant methods
         listType getFirstData() const { return headPtr->getData(); };
         listType getLastData() const { return tailPtr->getData(); };
         listType getData(int key);
         int getSize() const { return size; };
         bool isOrdered() const { return isSorted; };
-        // listType start(); 
         // Overloaded Operators
         // List& operator=(const List& l);    // use deep copy
-        // Friend functions
-        friend class Iterator;
+        // Friend functions and classes
+        // friend class Iterator;               // definition in cpp file
         friend std::ostream& operator<<(std::ostream& out, const List& l);
     private:
-        // typedef
-        typedef ListItem itemType;      // for iterator
         // Helper functions
         void insert(const listType&, ListItem*);
         ListItem* find(int key);
-        // void sort(bool isAscending);            // selection sort
         void swapItems(ListItem& li1, ListItem& li2);
         // Member variables
         ListItem* headPtr;

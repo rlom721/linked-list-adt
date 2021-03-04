@@ -14,128 +14,61 @@ using namespace lomboy_a2;
 // void GenQueueReport();
 
 int main () {
+    List tList;     // test List class
 
-    cout << "LIST CLASS\n";
+    // tList.GenStubResults();
+    tList.GenStubReport();
 
-    DataClass dc(0.7), dc1(1.1), dc2(2.4), dc3(3.5);
+    // // testing Stack
+    // DataClass s0(0.1), s1(0.2), s3(0.3), s4;
+    // Stack sTest(s0);
 
-    List tList(dc);
-    // cout << tList << endl;
-    cout << "tList init with data: " << dc << endl;
+    // cout << "\nShowing Stack!\n";
+    // sTest.iterate();
 
-    tList.insertToHead(dc1);
-    cout << "Inserted to head\n";
-    tList.traverse();
-    cout << endl;
+    // sTest.push(s1);
+    // sTest.iterate();
+    // cout << "Data at top: " << sTest.showTop() << endl;
 
-    tList.insertToTail(dc2);
-    cout << "Inserted to tail\n";
-    tList.traverse();
-    cout << endl;
+    // s4 = sTest.pop();
 
-    tList.insertToMid(dc3);
-    cout << "Inserted to mid\n";
-    tList.traverse();
-    cout << endl;
+    // cout << "Popped data " << s4 << " off stack!\n";
+    // sTest.iterate();
 
-    tList.removeHead();
-    cout << "Removed head\n";
-    tList.traverse();
-    cout << endl;
+    // // testing Queue
+    // Queue qTest(s0);
 
-    tList.removeHead();
-    cout << "Removed head\n";
-    tList.traverse();
-    cout << endl;
+    // cout << "\nShowing Queue!\n";
+    // qTest.iterate();
 
-    tList.insertToMid(dc);
-    cout << "Inserted to mid\n";
-    tList.traverse();
-    cout << endl;
+    // qTest.enqueue(s1);
+    // qTest.iterate();
 
-    tList.removeTail();
-    cout << "Removed tail\n";
-    tList.traverse();
-    cout << endl;
+    // s4 = qTest.dequeue();
 
-    tList.insertToMid(dc1);
-    cout << "Inserted to mid\n";
-    tList.traverse();
-    cout << endl;
+    // cout << "Popped data " << s4 << " off queue!\n";
+    // qTest.iterate();
 
-    // tList.insertToMid(dc2);
-    // cout << "Inserted to mid\n";
-    // tList.traverse();
-    // cout << endl;
-    cout << "List size: " << tList.getSize() << endl;
+    // cout << "Adding items...\n";
+    // qTest.enqueue(s3);
+    // qTest.enqueue(s4);
+    // qTest.iterate();
 
-    cout << "Testing search method:\n";
-    cout << "Looking for key of 0... " << tList.search(0) << endl;
-    cout << "Looking for key of 4... " << tList.search(4) << endl;
-    cout << "Looking for key of 7... " << tList.search(7) << endl;
-    cout << "Looking for key of 3... " << tList.search(3) << endl;
-    cout << "Looking for key of 2... " << tList.search(2) << endl;
+    // cout << "Sorting in ascending order...\n";
+    // qTest.sort();
+    // qTest.iterate();
 
-    cout << "Sorting in ascending order...\n";
-    tList.traverse();
-    tList.sortAsc();
-    tList.traverse();
+    // cout << "Sorting in descending order...\n";
+    // qTest.sortDesc();
+    // qTest.iterate();
 
-    cout << "\nSorting in descending order...\n";
-    tList.traverse();
-    tList.sortDesc();
-    tList.traverse();
-
-    // testing Stack
-    DataClass s0(0.1), s1(0.2), s3(0.3), s4;
-    Stack sTest(s0);
-
-    cout << "\nShowing Stack!\n";
-    sTest.traverse();
-
-    sTest.push(s1);
-    sTest.traverse();
-    cout << "Data at top: " << sTest.showTop() << endl;
-
-    s4 = sTest.pop();
-
-    cout << "Popped data " << s4 << " off stack!\n";
-    sTest.traverse();
-
-    // testing Queue
-    Queue qTest(s0);
-
-    cout << "\nShowing Queue!\n";
-    qTest.traverse();
-
-    qTest.enqueue(s1);
-    qTest.traverse();
-
-    s4 = qTest.dequeue();
-
-    cout << "Popped data " << s4 << " off queue!\n";
-    qTest.traverse();
-
-    cout << "Adding items...\n";
-    qTest.enqueue(s3);
-    qTest.enqueue(s4);
-    qTest.traverse();
-
-    cout << "Sorting in ascending order...\n";
-    qTest.sort();
-    qTest.traverse();
-
-    cout << "Sorting in descending order...\n";
-    qTest.sortDesc();
-    qTest.traverse();
-
-    // add bounds checking
-    cout << "Testing search method:\n";
-    cout << "Looking for key of 0... " << qTest.searchQ(0) << endl;
-    cout << "Looking for key of 4... " << qTest.searchQ(4) << endl;
-    cout << "Looking for key of 7... " << qTest.searchQ(7) << endl;
-    cout << "Looking for key of 3... " << qTest.searchQ(3) << endl;
-    cout << "Looking for key of 2... " << qTest.searchQ(2) << endl;
+    // // add bounds checking
+    // cout << "Testing search method:\n";
+    // cout << "Looking for key of 0... " << qTest.searchQ(0) << endl;
+    // cout << "Looking for key of 4... " << qTest.searchQ(4) << endl;
+    // cout << "Looking for key of 7... " << qTest.searchQ(7) << endl;
+    // cout << "Looking for key of 3... " << qTest.searchQ(3) << endl;
+    // cout << "Looking for key of 2... " << qTest.searchQ(2) << endl;
 
     return 0;
 }

@@ -3,12 +3,14 @@
 #include "List.h"        // header file for List class
 #include "ListItem.h"    // header file for ListItem class
 #include <iostream>
+#include <fstream>      // for reading and writing to data files
 using namespace std;
 namespace lomboy_a2 {
 
     // Default constructor sets default values of members
     List::List()
-        : headPtr(nullptr), tailPtr(nullptr), size(0), isSorted(false), keyMkr(0) { }
+        : headPtr(nullptr), tailPtr(nullptr), size(0), isSorted(false), keyMkr(0) { 
+    }
 
     // Parametrized constructor sets default values of members, then inserts a new
     // entry into list.
@@ -28,7 +30,6 @@ namespace lomboy_a2 {
 
     // Destructor frees allocated memory through list
     List::~List() {
-        cout << "DESTRUCTOR!\n";
         clearList();
     }
 
@@ -198,8 +199,8 @@ namespace lomboy_a2 {
 
     // This method implements the selection sort algorithm to sort items in list.
     void List::sortAsc() {
-        ListItem* item1ptr = headPtr;             // traverse through inner loop
-        ListItem* item2ptr = headPtr->getNext();  // traverse through outer loop
+        ListItem* item1ptr = headPtr;             // iterate through inner loop
+        ListItem* item2ptr = headPtr->getNext();  // iterate through outer loop
         int outCount = 0,       // outer loop count (1st item)
             inCount = 0;        // inner loop count (2nd item)
 
@@ -225,8 +226,8 @@ namespace lomboy_a2 {
     }
     // This method implements the selection sort algorithm to sort items in list.
     void List::sortDesc() {
-        ListItem* item1ptr = headPtr;             // traverse through inner loop
-        ListItem* item2ptr = headPtr->getNext();  // traverse through outer loop
+        ListItem* item1ptr = headPtr;             // iterate through inner loop
+        ListItem* item2ptr = headPtr->getNext();  // iterate through outer loop
         int outCount = 0,       // outer loop count (1st item)
             inCount = 0;        // inner loop count (2nd item)
 
@@ -261,7 +262,7 @@ namespace lomboy_a2 {
     }
 
     // displays list contents as linked list!
-    void List::traverse() {
+    void List::iterate() {
         ListItem* listPtr = headPtr;
 
         // iterate through to show data fields of items
@@ -311,8 +312,6 @@ namespace lomboy_a2 {
         }
         // insert to head case
         else if (listPtr == headPtr) {
-            cout << "Inserting to head...\n";
-
             // link new item to old head, old head's to new, set head to new
             newItemPtr->setNext(headPtr);
             headPtr->setPrev(newItemPtr);
@@ -320,8 +319,6 @@ namespace lomboy_a2 {
         }
         // insert to tail case
         else if (listPtr == tailPtr) {
-            cout << "Inserting to tail...\n";
-
             // link new item to old tail, old tail's to new, set tail to new
             newItemPtr->setPrev(tailPtr);
             tailPtr->setNext(newItemPtr);
@@ -353,30 +350,188 @@ namespace lomboy_a2 {
     }
 
     // Friend function: Overloaded outstream operator
-    // Displays contents of Linked List
-    // Assumes listDataType can be outputted to console (or has outstream capabilities) and
-    // that listDataType has getData member function.
-    ostream& operator<<(ostream& out, const List& l){
-        if (l.headPtr != nullptr && l.tailPtr != nullptr) {
-            ListItem* listPtr = l.headPtr;
+    // Sends contents of Linked List to outstream
+    // Assumes listType can be outputted to console (or has outstream capabilities) and
+    // that listType has getData member function.
+    ostream& operator<<(ostream& out, const List& l) {
+        ListItem* listPtr = l.headPtr;
 
-            while (listPtr != nullptr) {
-                cout << "Item Data: " << *listPtr << endl;
-                listPtr = listPtr->getNext();
-            }
-
-            cout << "END\n";
-
-            out << "headPtr: " << l.headPtr->getData() << endl;
-            out << "tailPtr: " << l.tailPtr->getData() << endl;
-            out << "size: " << l.getSize() << endl;
-
-            listPtr = nullptr;
+        // iterate through to show data fields of items
+        out << "START->";
+        while (listPtr != nullptr) {
+            out << listPtr->getData() << "->";
+            listPtr = listPtr->getNext();
         }
-        else
-            out << "headPtr and tailPtr are nullptr\n";
+        out << "END\n";
+
+        // iterate through again to show keys
+        listPtr = l.headPtr;
+        out << "KEY:   ";
+        while (listPtr != nullptr) {
+            out << "(" << listPtr->getDataKey() << ")  ";
+            listPtr = listPtr->getNext();
+        }
+        out << endl;
+
+        listPtr = nullptr;
 
         return out;
     }
 
+    // This method generates stub program results of List methods to console to 
+    // demonstrate class features.
+    void List::GenStubResults() {
+        cout << "LIST CLASS TEST REPORT\n\n"
+             << "This displays the functionality of the List class, including constructor\n"
+             << "use and methods using test data.\n\n";
+
+        List::listType dc(0.7), dc1(1.1), dc2(2.4), dc3(3.5);
+
+        List tList(dc);         // for testing
+
+        cout << "Constructor Tests\n\n";
+        cout << "Testing Parametrized constructor...\n";
+        cout << "List initialized with data: " << dc << " inserted at start.\n";
+        tList.iterate();
+
+        cout << "\nMethod Tests\n";
+        cout << "Testing insertToHead() method...";
+        tList.insertToHead(dc1);
+        cout << "\nInserting " << dc1 << " to head...\n";
+        tList.iterate();
+    
+        tList.insertToTail(dc2);
+        cout << "\nTesting insertToTail() method...";
+        cout << "\nInserting " << dc2 << " to tail...\n";
+        tList.iterate();
+
+        tList.insertToMid(dc3);
+        cout << "\nTesting insertToMid() method...";
+        cout << "\nInserting " << dc3 << " to middle...\n";
+        tList.iterate();
+
+        tList.removeHead();
+        cout << "\nTesting removeHead() method...\n";
+        cout << "\nRemoved item at head.\n";
+        tList.iterate();
+
+        tList.removeTail();
+        cout << "\nTesting removeTail() method...\n";
+        cout << "\nRemoved item at tail\n";
+        tList.iterate();
+
+        tList.insertToMid(dc);
+        cout << "\nInserting " << dc << " to middle...\n";
+        tList.iterate();
+
+        tList.insertToMid(dc1);
+        cout << "\nInserting " << dc1 << " to middle...\n";
+        tList.iterate();
+
+        cout << "Testing getSize() method...\n";
+        cout << "\nList size: " << tList.getSize() << endl;
+
+        cout << "\nTesting search() method...\n";
+
+        // look for keys from 0 to 3
+        for (int i = 0; i < 4; i++) {
+            cout << "Searching for key of " << i << ": "
+                 << (tList.search(i) ? "found" : "not found") << endl;
+        }
+
+        cout << "Current list order: \n";
+        tList.iterate();
+
+        cout << "\nTesting sortAsc() method...\n";
+        cout << "\nSorting in ascending order...\n";
+        tList.sortAsc();
+        tList.iterate();
+
+        cout << "\nTesting sortDesc() method...\n";
+        cout << "\nSorting in descending order...\n";
+        tList.sortDesc();
+        tList.iterate();
+    }
+
+
+    // This method generates a text file with name "Stub-Report" displaying stub program results to
+    // demonstrate class features.
+    void List::GenStubReport() {
+        ofstream outFile;
+
+        outFile.open("Stub-Report.txt");
+
+        outFile << "LIST CLASS TEST REPORT\n\n"
+             << "This displays the functionality of the List class, including constructor\n"
+             << "use and methods using test data.\n\n";
+
+        List::listType dc(0.7), dc1(1.1), dc2(2.4), dc3(3.5);
+
+        List tList(dc);         // for testing
+
+        outFile << "Constructor Tests\n\n";
+        outFile << "Testing Parametrized constructor...\n";
+        outFile << "List initialized with data: " << dc << " inserted at start.\n";
+        outFile << tList << endl;
+
+        outFile << "\nMethod Tests\n";
+        outFile << "Testing insertToHead() method...";
+        tList.insertToHead(dc1);
+        outFile << "\nInserting " << dc1 << " to head...\n";
+        outFile << tList << endl;
+    
+        tList.insertToTail(dc2);
+        outFile << "\nTesting insertToTail() method...";
+        outFile << "\nInserting " << dc2 << " to tail...\n";
+        outFile << tList << endl;
+
+        tList.insertToMid(dc3);
+        outFile << "\nTesting insertToMid() method...";
+        outFile << "\nInserting " << dc3 << " to middle...\n";
+        outFile << tList << endl;
+
+        tList.removeHead();
+        outFile << "\nTesting removeHead() method...\n";
+        outFile << "\nRemoved item at head.\n";
+        outFile << tList << endl;
+
+        tList.removeTail();
+        outFile << "\nTesting removeTail() method...\n";
+        outFile << "\nRemoved item at tail\n";
+        outFile << tList << endl;
+
+        tList.insertToMid(dc);
+        outFile << "\nInserting " << dc << " to middle...\n";
+        outFile << tList << endl;
+
+        tList.insertToMid(dc1);
+        outFile << "\nInserting " << dc1 << " to middle...\n";
+        outFile << tList << endl;
+
+        outFile << "Testing getSize() method...\n";
+        outFile << "\nList size: " << tList.getSize() << endl;
+
+        outFile << "\nTesting search() method...\n";
+
+        // look for keys from 0 to 3
+        for (int i = 0; i < 4; i++) {
+            outFile << "Searching for key of " << i << ": "
+                 << (tList.search(i) ? "found" : "not found") << endl;
+        }
+
+        outFile << "Current list order: \n";
+        outFile << tList << endl;
+
+        outFile << "\nTesting sortAsc() method...";
+        outFile << "\nSorting in ascending order.\n";
+        tList.sortAsc();
+        outFile << tList << endl;
+
+        outFile << "\nTesting sortDesc() method...";
+        outFile << "\nSorting in descending order.\n";
+        tList.sortDesc();
+        outFile << tList << endl;
+
+        outFile.close();
+    }
 }
