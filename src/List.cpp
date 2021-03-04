@@ -459,7 +459,7 @@ namespace lomboy_a2 {
     void List::GenStubReport() {
         ofstream outFile;
 
-        outFile.open("Stub-Report.txt");
+        outFile.open("List-Stub-Report.txt");
 
         outFile << "LIST CLASS TEST REPORT\n\n"
              << "This displays the functionality of the List class, including constructor\n"

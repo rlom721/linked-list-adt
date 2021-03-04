@@ -14,26 +14,15 @@ using namespace lomboy_a2;
 // void GenQueueReport();
 
 int main () {
-    List tList;     // test List class
+    List tList;     // objects for generating class reports
+    Stack tStack;  
 
     // tList.GenStubResults();
     tList.GenStubReport();
 
-    // // testing Stack
-    // DataClass s0(0.1), s1(0.2), s3(0.3), s4;
-    // Stack sTest(s0);
+    // tStack.GenStackStubResults();
+    tStack.GenStackStubReport();
 
-    // cout << "\nShowing Stack!\n";
-    // sTest.iterate();
-
-    // sTest.push(s1);
-    // sTest.iterate();
-    // cout << "Data at top: " << sTest.showTop() << endl;
-
-    // s4 = sTest.pop();
-
-    // cout << "Popped data " << s4 << " off stack!\n";
-    // sTest.iterate();
 
     // // testing Queue
     // Queue qTest(s0);
