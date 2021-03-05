@@ -6,8 +6,8 @@
 using namespace std;
 namespace lomboy_a2 {
 
-    // Default constructor sets default values of members
-    Stack::Stack() : size(0) { }
+    // Default constructor sets default value of size
+    Stack::Stack() : size(0) {}
 
     // Parametrized constructor sets default values of members, then inserts a new
     // entry into list.
@@ -15,13 +15,13 @@ namespace lomboy_a2 {
         push(entry);
     }
 
-    Stack::~Stack() {
-        cout << "Stack destructor!" << endl;
-    }
+    // Copy constructor calls base class copy constructor
+    Stack::Stack(const Stack& s) : List(s) {}
 
     // This method adds an entry to the stack.
     void Stack::push(stackDataType& entry) {
         insertToHead(entry);
+        size = getSize();
     }
 
     // This method pops an entry off the top of the stack and returns it.
@@ -29,6 +29,7 @@ namespace lomboy_a2 {
         stackDataType topData = start(); // temporarily store to return after deletion
 
         removeHead();
+        size = getSize();
 
         return topData;
     }
@@ -38,6 +39,10 @@ namespace lomboy_a2 {
         iterate();
     }
 
+    // This method returns true if stack is empty.
+    bool Stack::isEmpty() const { 
+        return (size == 0); 
+    }
 
     // This method shows the top entry of the stack.
     Stack::stackDataType Stack::showTop() {
@@ -61,7 +66,7 @@ namespace lomboy_a2 {
         cout << "Showing Stack Contents:\n";
         sTest.showStack();
 
-        cout << "Methods Tests\n";
+        cout << "\nMethods Tests\n";
         cout << "Testing push() method...\n";
         sTest.push(s1);
         sTest.showStack();
@@ -88,15 +93,26 @@ namespace lomboy_a2 {
              << "use and methods using test data.\n\n";
 
         DataClass s0(0.1), s1(0.2), s3(0.3), s4;
-        Stack sTest(s0);
+        Stack sTest(s0), sEmpty;
 
-        // outFile << "Constructor Tests\n\n";
+        outFile << "Constructor Tests\n\n";
+        outFile << "Testing Default constructor...\n";
+        outFile << "Stack should have no data.\n";
+        outFile << sEmpty << endl;
+
         outFile << "Testing Parametrized Constructor...\n";
         outFile << "Stack initialized with data: " << s0 << " inserted.\n";
         outFile << "Showing Stack Contents:\n";
         outFile << sTest << endl;
 
-        outFile << "Methods Tests\n";
+        Stack sTest2(sTest);
+        outFile << "Testing Copy constructor...\n";
+        outFile << "Showing contents of original stack:\n";
+        outFile << sTest; 
+        outFile << "Stack created with copy constructor:\n";
+        outFile << sTest2 << endl;
+
+        outFile << "Methods Tests\n\n";
         outFile << "Testing push() method...\n";
         sTest.push(s1);
         outFile << sTest << endl;
@@ -108,7 +124,10 @@ namespace lomboy_a2 {
         s4 = sTest.pop();
         outFile << sTest << endl;
 
-        outFile << "\nPopped data " << s4 << " off stack!\n";
+        outFile << "Popped data " << s4 << " off stack!\n";
+
+        outFile << "\nTesting isEmpty() method...\n";
+        outFile << "Stack is " << (sTest.isEmpty() ? "empty" : "not empty") << endl;
 
         outFile.close();
     }

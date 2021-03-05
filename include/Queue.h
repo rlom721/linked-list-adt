@@ -17,8 +17,6 @@ namespace lomboy_a2 {
         Queue();
         Queue(queueDataType& entry);
         Queue(const Queue&);    // copy
-        // Destructor
-        ~Queue();
         // Modification methods
         void enqueue(queueDataType& entry);
         queueDataType dequeue();
@@ -26,8 +24,8 @@ namespace lomboy_a2 {
         void sortDsc();
         // Constant methods
         bool searchQ(int key);
-        bool isEmpty() { return getSize(); }
-        // bool isFull();        
+        bool isEmpty() const;
+        // Test methods
         void GenQueueStubResults();      // shows functionality of List class
         void GenQueueStubReport();
     private:

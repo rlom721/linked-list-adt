@@ -8,13 +8,13 @@ using namespace std;
 namespace lomboy_a2 {
     // Default constructor sets default values of members
     List::List()
-        : iterator(nullptr), headPtr(nullptr), tailPtr(nullptr), size(0), isSorted(false), keyMkr(0) { 
+        : iterator(nullptr), headPtr(nullptr), tailPtr(nullptr), size(0), keyMkr(0) { 
     }
 
     // Parametrized constructor sets default values of members, then inserts a new
     // entry into list.
     List::List(listType data)
-        : iterator(nullptr), headPtr(nullptr), tailPtr(nullptr), size(0), isSorted(false), keyMkr(0) {
+        : iterator(nullptr), headPtr(nullptr), tailPtr(nullptr), size(0), keyMkr(0) {
         insertToTail(data);
     }
 
@@ -26,7 +26,6 @@ namespace lomboy_a2 {
         tailPtr = nullptr;
         iterator = nullptr;
         size = 0;
-        isSorted = false;
         keyMkr = 0;
 
         ListItem* listPtr = l.headPtr;    // to iterate through list
@@ -38,10 +37,8 @@ namespace lomboy_a2 {
 
         // iterate through to copy item data into new list
         while (listPtr != nullptr) {
-
             entryCopy = listPtr->getData();
-            this->insertToTail(entryCopy);
-
+            this->insertCopy(entryCopy);
             listPtr = listPtr->getNext();
         }
 
@@ -51,18 +48,55 @@ namespace lomboy_a2 {
 
     // Destructor frees allocated memory through list
     List::~List() {
-        cout << "List Destructor!\n";
         clearList();
     }
 
     // This is insert method adds new ListItem to head of list.
     void List::insertToHead(const listType& entry) {
-        insert(entry, headPtr);
+        ListItem* newItemPtr = new ListItem(entry); // new item has entry data
+
+        newItemPtr->setKey(keyMkr++);   // set unique key of item
+
+        // empty list case sets head and tail to new item
+        if (headPtr == nullptr) {
+            headPtr = newItemPtr;
+            tailPtr = newItemPtr;
+        }
+        // insert to head
+        else {
+            // link new item to old head, old head's to new, set head to new
+            newItemPtr->setNext(headPtr);
+            headPtr->setPrev(newItemPtr);
+            headPtr = newItemPtr;
+        }
+
+        // increment listPtr and prevent a dangling pointer!
+        size++;
+        newItemPtr = nullptr;
     }
 
     // This is insert method adds new ListItem to tail of list.
     void List::insertToTail(const listType& entry) {
-        insert(entry, tailPtr);
+        ListItem* newItemPtr = new ListItem(entry); // new item has entry data
+
+        newItemPtr->setKey(keyMkr++);   // set unique key of item
+
+        // empty list case sets head and tail to new item
+        if (headPtr == nullptr) {
+            headPtr = newItemPtr;
+            tailPtr = newItemPtr;
+        }
+        // insert to tail
+        else {
+            // link new item to old tail, old tail's to new, set tail to new
+            newItemPtr->setPrev(tailPtr);
+            tailPtr->setNext(newItemPtr);
+            tailPtr = newItemPtr;
+        }
+
+        // increment listPtr and prevent a dangling pointer!
+        size++;
+        newItemPtr = nullptr;
     }
 
     // FIX - not putting it in middle!
@@ -311,7 +345,8 @@ namespace lomboy_a2 {
     // If there is no item, it returns dummy data.
     List::listType List::getNext() {
         listType data(-1.0);
-        if (hasNext())
+
+        if (!hasNext())
             return data;
         else {
             iterator = iterator->getNext();
@@ -321,46 +356,22 @@ namespace lomboy_a2 {
 
     // This method returns whether or not the item iterator points to has an item after it.
     bool List::hasNext() const {
-        return (iterator->getNext() != nullptr);
+        bool notAtEnd = (iterator->getNext() != nullptr);
+        return notAtEnd;
     }
 
     // This method searches for an item with a matching key and returns its data.
+    // returns dummy data if invalid index
     List::listType List::getData(int key) {
         ListItem* item = find(key);
-        return item->getData();
-    }
-
-    // This is a helper function for insert to tail and head methods, which 
-    // adds new ListItem to list based on location of listPtr.
-    void List::insert(const listType& entry, ListItem* listPtr) {
-        ListItem* newItemPtr = new ListItem(entry); // new item has entry data
-
-        newItemPtr->setKey(keyMkr++);   // set unique key of item
-
-        // empty list case sets head and tail to new item
-        if (headPtr == nullptr) {
-            headPtr = newItemPtr;
-            tailPtr = newItemPtr;
+        
+        if (item == nullptr) {
+            listType dummyData(-1.0);
+            cout << "No item with key found.\n";
+            return dummyData;
         }
-        // insert to head case
-        else if (listPtr == headPtr) {
-            // link new item to old head, old head's to new, set head to new
-            newItemPtr->setNext(headPtr);
-            headPtr->setPrev(newItemPtr);
-            headPtr = newItemPtr;
-        }
-        // insert to tail case
-        else if (listPtr == tailPtr) {
-            // link new item to old tail, old tail's to new, set tail to new
-            newItemPtr->setPrev(tailPtr);
-            tailPtr->setNext(newItemPtr);
-            tailPtr = newItemPtr;
-        }
-
-        // increment listPtr and prevent a dangling pointer!
-        size++;
-        listPtr = nullptr;
-        newItemPtr = nullptr;
+        else 
+            return item->getData();
     }
 
     // This helper function searches through list for an item with a matching key,
@@ -379,6 +390,29 @@ namespace lomboy_a2 {
         // this only executes if search failed
         listPtr = nullptr;
         return listPtr;
+    }
+
+    // This healper method adds new ListItem to tail of list WITHOUT changing key.
+    // To be used with copy constructor.
+    void List::insertCopy(const listType& entry) {
+        ListItem* newItemPtr = new ListItem(entry); // new item has entry data
+
+        // empty list case sets head and tail to new item
+        if (headPtr == nullptr) {
+            headPtr = newItemPtr;
+            tailPtr = newItemPtr;
+        }
+        // insert to tail
+        else {
+            // link new item to old tail, old tail's to new, set tail to new
+            newItemPtr->setPrev(tailPtr);
+            tailPtr->setNext(newItemPtr);
+            tailPtr = newItemPtr;
+        }
+
+        // increment listPtr and prevent a dangling pointer!
+        size++;
+        newItemPtr = nullptr;
     }
 
     // Friend function: Overloaded outstream operator
@@ -513,13 +547,12 @@ namespace lomboy_a2 {
         outFile1 << "Testing Default constructor...\n";
         outFile1 << "List 2 should have no data.\n";
         outFile1 << tList1 << endl;
-        tList1.insertToHead(dc);
 
         outFile1 << "Testing Parametrized constructor...\n";
         outFile1 << "List 1 initialized with data " << dc << " inserted at start.\n";
         outFile1 << tList << endl;
 
-        outFile1 << "Method Tests\n";
+        outFile1 << "\nMethod Tests\n";
         outFile1 << "Testing insertToHead() method...";
         tList.insertToHead(dc1);
         outFile1 << "\nInserting " << dc1 << " to head...\n";
@@ -569,6 +602,9 @@ namespace lomboy_a2 {
                  << (tList.search(i) ? "found" : "not found") << endl;
         }
 
+        outFile1 << "\nTesting getData() method...\n";
+        outFile1 << "Getting item with key 5: " << tList.getData(5) << endl;
+
         // print out data for Unordered Operations
         outFile2 << "LIST CLASS UNORDERED OPERATIONS REPORT\n\n"
              << "This displays the functionality of the List class, including copy constructor\n"
@@ -576,10 +612,12 @@ namespace lomboy_a2 {
 
         List tList2(tList);     // copy contents of first list used above
 
-        cout << "Copy Constructor Test\n\n";
-        cout << "Testing Copy constructor...\n";
+        outFile2 << "Copy Constructor Test\n\n";
+        outFile2 << "Testing Copy constructor...\n";
 
-        outFile2 << "Current list order: \n";
+        outFile2 << "Showing contents of original list:\n";
+        outFile2 << tList << endl; 
+        outFile2 << "List created with copy constructor:\n";
         outFile2 << tList2 << endl;
 
         outFile2 << "\nTesting sortAsc() method...";
@@ -592,8 +630,18 @@ namespace lomboy_a2 {
         tList2.sortDesc();
         outFile2 << tList2 << endl;
 
-        cout << "Testing start() method...\n";
-        cout << "Showing item data at start: " << tList2.start() << endl;
+        outFile2 << "Testing start() method...\n";
+        outFile2 << "Showing item data at start: " << tList2.start() << endl;
+   
+        outFile2 << "\nTesting getNext() method...\n";
+        outFile2 << "Showing next item data: " << tList2.getNext() << endl;
+
+        outFile2 << "\nTesting hasNext() method...\n";
+        outFile2 << "Is there item after current? " 
+                 << (tList2.hasNext() ? "Yes" : "No") << endl;
+
+        outFile2 << "\nTesting end() method...\n";
+        outFile2 << "Showing item data at end: " << tList2.end() << endl;
 
         // close files
         outFile1.close();

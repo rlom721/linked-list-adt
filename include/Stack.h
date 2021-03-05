@@ -17,19 +17,16 @@ namespace lomboy_a2 {
         Stack();
         Stack(stackDataType& entry);
         Stack(const Stack&);    // copy
-        ~Stack();
         // Modification methods
         void push(stackDataType& entry);
         stackDataType pop();
         // Constant methods
         void showStack();
-        bool isEmpty() { return getSize(); }
-        // bool isFull();
+        bool isEmpty() const;
         stackDataType showTop();
         void GenStackStubResults();      // shows functionality of List class
         void GenStackStubReport();
     private:
-        // member variables
         int size;
     };
 

@@ -42,20 +42,18 @@ namespace lomboy_a2 {
         // Constant methods
         listType getData(int key);
         int getSize() const { return size; };
-        bool isOrdered() const { return isSorted; };
         // Friend functions and classes
         friend std::ostream& operator<<(std::ostream& out, const List& l);
     private:
         // Helper functions
         void clearList();
-        void insert(const listType&, ListItem*);
         ListItem* find(int key);
         void swapItems(ListItem& li1, ListItem& li2);
+        void insertCopy(const listType& entry);
         // Member variables
         ListItem* headPtr;
         ListItem* tailPtr;
         int size;
-        bool isSorted;
         int keyMkr;             // generate a unique key for list item
     };
 

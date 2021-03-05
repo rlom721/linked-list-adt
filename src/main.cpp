@@ -1,7 +1,4 @@
 #include <iostream>
-#include "UnitTester.h"
-#include "DataClass.h"
-#include "ListItem.h"
 #include "List.h"
 #include "Stack.h"
 #include "Queue.h"
@@ -15,13 +12,9 @@ int main () {
     Stack tStack;  
     Queue tQueue;
 
-    tList.GenStubResults();
-    tList.GenStubReport();
-
-    // tStack.GenStackStubResults();
+    // generate reports on classes as text files
+    tList.GenStubReport();   // this generates two reports (unordered and ordered)
     tStack.GenStackStubReport();
-
-    // tQueue.GenQueueStubResults();
     tQueue.GenQueueStubReport();
 
     return 0;
