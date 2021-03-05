@@ -6,7 +6,6 @@
 #include <fstream>      // for reading and writing to data files
 using namespace std;
 namespace lomboy_a2 {
-
     // Default constructor sets default values of members
     List::List()
         : iterator(nullptr), headPtr(nullptr), tailPtr(nullptr), size(0), isSorted(false), keyMkr(0) { 
@@ -254,7 +253,7 @@ namespace lomboy_a2 {
         item2ptr = nullptr;
     }            
 
-    // This helper function asdnkf;aowi
+    // This helper function swaps two ListItems in the list (only their data).
     void List::swapItems(ListItem& li1, ListItem& li2) {
         ListItem temp;      // for swapping
 
@@ -263,7 +262,7 @@ namespace lomboy_a2 {
         li1 = temp;
     }
 
-    // displays list contents as linked list!
+    // This method displays list contents as linked list!
     void List::iterate() {
         ListItem* listPtr = headPtr;
 
@@ -383,7 +382,7 @@ namespace lomboy_a2 {
     }
 
     // Friend function: Overloaded outstream operator
-    // Sends contents of Linked List to outstream
+    // Sends contents of Linked List to outstream (same output as iterate())
     // Assumes listType can be outputted to console (or has outstream capabilities) and
     // that listType has getData member function.
     ostream& operator<<(ostream& out, const List& l) {
@@ -495,81 +494,109 @@ namespace lomboy_a2 {
     // This method generates a text file with name "Stub-Report" displaying stub program results to
     // demonstrate class features.
     void List::GenStubReport() {
-        ofstream outFile;
+        ofstream outFile1, outFile2;
 
-        outFile.open("List-Stub-Report.txt");
+        // open files
+        outFile1.open("List-Unordered-Report.txt");
+        outFile2.open("List-Ordered-Report.txt");
 
-        outFile << "LIST CLASS TEST REPORT\n\n"
+        // print out data for Unordered Operations
+        outFile1 << "LIST CLASS UNORDERED OPERATIONS REPORT\n\n"
              << "This displays the functionality of the List class, including constructor\n"
-             << "use and methods using test data.\n\n";
+             << "use and methods using test data. Only unordered operations shown.\n\n";
 
         List::listType dc(0.7), dc1(1.1), dc2(2.4), dc3(3.5);
 
-        List tList(dc);         // for testing
+        List tList(dc), tList1;         // for testing
 
-        outFile << "Constructor Tests\n\n";
-        outFile << "Testing Parametrized constructor...\n";
-        outFile << "List initialized with data: " << dc << " inserted at start.\n";
-        outFile << tList << endl;
+        outFile1 << "Constructor Tests\n\n";
+        outFile1 << "Testing Default constructor...\n";
+        outFile1 << "List 2 should have no data.\n";
+        outFile1 << tList1 << endl;
+        tList1.insertToHead(dc);
 
-        outFile << "\nMethod Tests\n";
-        outFile << "Testing insertToHead() method...";
+        outFile1 << "Testing Parametrized constructor...\n";
+        outFile1 << "List 1 initialized with data " << dc << " inserted at start.\n";
+        outFile1 << tList << endl;
+
+        outFile1 << "Method Tests\n";
+        outFile1 << "Testing insertToHead() method...";
         tList.insertToHead(dc1);
-        outFile << "\nInserting " << dc1 << " to head...\n";
-        outFile << tList << endl;
+        outFile1 << "\nInserting " << dc1 << " to head...\n";
+        outFile1 << tList << endl;
     
         tList.insertToTail(dc2);
-        outFile << "\nTesting insertToTail() method...";
-        outFile << "\nInserting " << dc2 << " to tail...\n";
-        outFile << tList << endl;
+        outFile1 << "\nTesting insertToTail() method...";
+        outFile1 << "\nInserting " << dc2 << " to tail...\n";
+        outFile1 << tList << endl;
 
         tList.insertToMid(dc3);
-        outFile << "\nTesting insertToMid() method...";
-        outFile << "\nInserting " << dc3 << " to middle...\n";
-        outFile << tList << endl;
+        outFile1 << "\nTesting insertToMid() method...";
+        outFile1 << "\nInserting " << dc3 << " to middle...\n";
+        outFile1 << tList << endl;
 
         tList.removeHead();
-        outFile << "\nTesting removeHead() method...\n";
-        outFile << "\nRemoved item at head.\n";
-        outFile << tList << endl;
+        outFile1 << "\nTesting removeHead() method...\n";
+        outFile1 << "Removed item at head.\n";
+        outFile1 << tList << endl;
 
         tList.removeTail();
-        outFile << "\nTesting removeTail() method...\n";
-        outFile << "\nRemoved item at tail\n";
-        outFile << tList << endl;
+        outFile1 << "\nTesting removeTail() method...\n";
+        outFile1 << "Removed item at tail\n";
+        outFile1 << tList << endl;
 
         tList.insertToMid(dc);
-        outFile << "\nInserting " << dc << " to middle...\n";
-        outFile << tList << endl;
+        outFile1 << "\nInserting " << dc << " to middle...\n";
+        outFile1 << tList << endl;
 
         tList.insertToMid(dc1);
-        outFile << "\nInserting " << dc1 << " to middle...\n";
-        outFile << tList << endl;
+        outFile1 << "\nInserting " << dc1 << " to middle...\n";
+        outFile1 << tList << endl;
 
-        outFile << "Testing getSize() method...\n";
-        outFile << "\nList size: " << tList.getSize() << endl;
+        tList.remove(4);
+        outFile1 << "\nTesting remove() method...\n";
+        outFile1 << "Removed item with key 4.\n";
+        outFile1 << tList << endl;
 
-        outFile << "\nTesting search() method...\n";
+        outFile1 << "Testing getSize() method...\n";
+        outFile1 << "List size: " << tList.getSize() << endl;
+
+        outFile1 << "\nTesting search() method...\n";
 
         // look for keys from 0 to 3
         for (int i = 0; i < 4; i++) {
-            outFile << "Searching for key of " << i << ": "
+            outFile1 << "Searching for key of " << i << ": "
                  << (tList.search(i) ? "found" : "not found") << endl;
         }
 
-        outFile << "Current list order: \n";
-        outFile << tList << endl;
+        // print out data for Unordered Operations
+        outFile2 << "LIST CLASS UNORDERED OPERATIONS REPORT\n\n"
+             << "This displays the functionality of the List class, including copy constructor\n"
+             << "use and methods using test data. Only ordered operations shown.\n\n";
 
-        outFile << "\nTesting sortAsc() method...";
-        outFile << "\nSorting in ascending order.\n";
-        tList.sortAsc();
-        outFile << tList << endl;
+        List tList2(tList);     // copy contents of first list used above
 
-        outFile << "\nTesting sortDesc() method...";
-        outFile << "\nSorting in descending order.\n";
-        tList.sortDesc();
-        outFile << tList << endl;
+        cout << "Copy Constructor Test\n\n";
+        cout << "Testing Copy constructor...\n";
 
-        outFile.close();
+        outFile2 << "Current list order: \n";
+        outFile2 << tList2 << endl;
+
+        outFile2 << "\nTesting sortAsc() method...";
+        outFile2 << "\nSorting in ascending order.\n";
+        tList2.sortAsc();
+        outFile2 << tList2 << endl;
+
+        outFile2 << "\nTesting sortDesc() method...";
+        outFile2 << "\nSorting in descending order.\n";
+        tList2.sortDesc();
+        outFile2 << tList2 << endl;
+
+        cout << "Testing start() method...\n";
+        cout << "Showing item data at start: " << tList2.start() << endl;
+
+        // close files
+        outFile1.close();
+        outFile2.close();
     }
 }

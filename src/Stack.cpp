@@ -26,7 +26,7 @@ namespace lomboy_a2 {
 
     // This method pops an entry off the top of the stack and returns it.
     Stack::stackDataType Stack::pop() {
-        stackDataType topData = getFirstData(); // temporarily store to return after deletion
+        stackDataType topData = start(); // temporarily store to return after deletion
 
         removeHead();
 
@@ -41,7 +41,7 @@ namespace lomboy_a2 {
 
     // This method shows the top entry of the stack.
     Stack::stackDataType Stack::showTop() {
-        return getFirstData();
+        return start();
     }
 
         // This method generates stub program results of List methods to console to 
@@ -90,7 +90,7 @@ namespace lomboy_a2 {
         DataClass s0(0.1), s1(0.2), s3(0.3), s4;
         Stack sTest(s0);
 
-        outFile << "Constructor Tests\n\n";
+        // outFile << "Constructor Tests\n\n";
         outFile << "Testing Parametrized Constructor...\n";
         outFile << "Stack initialized with data: " << s0 << " inserted.\n";
         outFile << "Showing Stack Contents:\n";

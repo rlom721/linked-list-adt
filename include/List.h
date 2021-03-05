@@ -33,7 +33,6 @@ namespace lomboy_a2 {
         void sortAsc();            // selection sort
         void sortDesc();
         void iterate();            // displays list contents as linked list!
-        void clearList();
         listType start(); 
         listType end();
         listType getNext();        
@@ -41,8 +40,6 @@ namespace lomboy_a2 {
         void GenStubResults();      // shows functionality of List class
         void GenStubReport();
         // Constant methods
-        listType getFirstData() const { return headPtr->getData(); };
-        listType getLastData() const { return tailPtr->getData(); };
         listType getData(int key);
         int getSize() const { return size; };
         bool isOrdered() const { return isSorted; };
@@ -50,6 +47,7 @@ namespace lomboy_a2 {
         friend std::ostream& operator<<(std::ostream& out, const List& l);
     private:
         // Helper functions
+        void clearList();
         void insert(const listType&, ListItem*);
         ListItem* find(int key);
         void swapItems(ListItem& li1, ListItem& li2);

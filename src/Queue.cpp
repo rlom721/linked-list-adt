@@ -26,7 +26,7 @@ namespace lomboy_a2 {
 
     // This method removes an entry from the front of the Queue and returns it.
     Queue::queueDataType Queue::dequeue() {
-        queueDataType topData = getFirstData(); // temporarily store to return after deletion
+        queueDataType topData = start(); // temporarily store to return after deletion
 
         removeHead();
 
