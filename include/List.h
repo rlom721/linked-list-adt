@@ -12,8 +12,6 @@ namespace lomboy_a2 {
 
     class List {
     public:
-        // nested class
-        class Iterator;                 // forward declaration
         // typedef
         typedef ListItem itemType;      // for iterator
         typedef ListItem::listDataType listType;    // List depends on data type of ListItem
@@ -36,8 +34,8 @@ namespace lomboy_a2 {
         void sortDesc();
         void iterate();            // displays list contents as linked list!
         void clearList();
-        Iterator start();
-        Iterator end();
+        // Iterator start();
+        // Iterator end();
         // listType getNext();        // get item after iterator()
         // bool hasNext();
         void GenStubResults();      // shows functionality of List class
@@ -52,35 +50,7 @@ namespace lomboy_a2 {
         // List& operator=(const List& l);    // use deep copy
         // Friend functions and classes
         friend std::ostream& operator<<(std::ostream& out, const List& l);
-        // Iterator class to be used for List
-        class Iterator {
-        public:
-            // typedef        
-            typedef List::itemType itemType;
-            typedef List::listType itemData;
-            // Constructors
-            Iterator();
-            Iterator(itemType* start);
-            Iterator(Iterator& it);  // copy
-            // Constant methods
-            bool pastBounds();
-            // Overloaded operators
-            Iterator& operator=(Iterator& it);
-            itemData operator*();
-            Iterator& operator++();
-            Iterator& operator--();
-            // Iterator& operator->();
-            // Friend functions
-            friend bool operator!=(const Iterator& it1, const Iterator& it2);
-            friend bool operator==(const Iterator& it1, const Iterator& it2);
-            friend bool operator<(const Iterator& it1, const Iterator& it2);
-            friend bool operator>(const Iterator& it1, const Iterator& it2);
-        private:
-            // member variables
-            itemType* currentPtr;   // pointer to type of item in container
-        };
     private:
-
         // Helper functions
         void insert(const listType&, ListItem*);
         ListItem* find(int key);

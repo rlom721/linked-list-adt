@@ -18,8 +18,6 @@ namespace lomboy_a2 {
         ListItem(listDataType ldt);   // parametrized
         ListItem(listDataType ldt, ListItem* nextItem); // parametrized (may remove...)
         ListItem(const ListItem& li); // copy
-        // destructor
-        // ~ListItem();    // no need?
         // modification methods
         void set(const listDataType& ldt);
         void setKey(int key);
