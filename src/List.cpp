@@ -7,6 +7,86 @@
 using namespace std;
 namespace lomboy_a2 {
 
+    // ?? def to start?
+    // Default constructor sets default pointer to nullptr for iterator
+    List::Iterator::Iterator() : currentPtr(nullptr) { }
+
+    // Parametrized constructor sets argument value for pointer
+    List::Iterator::Iterator(itemType* start) : currentPtr(start) { }
+
+    // Copy constructor copies pointer of another Iterator object
+    List::Iterator::Iterator(Iterator& it) {
+        currentPtr = it.currentPtr;
+    }
+
+    // This method determines if pointer is at the start or end of the container.
+    // past start or end means pointer is nullptr, so it will return zero == false
+    bool List::Iterator::pastBounds() {
+        return currentPtr;
+    }
+
+    // Overloaded copy assignment
+    // This copies pointer from another Iterator object.
+    List::Iterator& List::Iterator::operator=(Iterator& it) {
+        // check if same object
+        if (this != &it) 
+            currentPtr = it.currentPtr;
+
+        return *this;
+    }
+
+    // Overloaded * (derefence operator)
+    // This is to be used like a dereference of a pointer. It returns the sata being pointed to.
+    List::Iterator::itemData List::Iterator::operator*() {
+
+        return currentPtr->getData();
+    }
+
+    // Overloaded ++ (postfix increment operator)
+    // Moves to next item in container, if not at end.
+    List::Iterator& List::Iterator::operator++() {
+        if (currentPtr != nullptr)
+            currentPtr = currentPtr->getNext();
+
+        return *this;
+    }
+
+    // Overloaded -- (postfix decrement operator)
+    // Moves to next item in container, if not at end.
+    List::Iterator& List::Iterator::operator--() {
+        if (currentPtr != nullptr)
+            currentPtr = currentPtr->getPrev();
+
+        return *this;
+    }
+
+    // Friend function: Overloaded outstream operator
+    // Displays data of Iterator object
+    ostream& operator<<(ostream& out, List::Iterator& it) {
+        out << *it;
+
+        return out;
+    }
+
+    // Friend function: Overloaded == operator
+    // Returns true if it1 and it2 point to same spot in memory.
+    bool operator==(const List::Iterator& it1, const List::Iterator& it2) {
+        return it1.currentPtr == it2.currentPtr;
+    }
+
+    // Friend function: Overloaded < operator
+    // Returns true if it1 is less than it2 (it1 is before it2 in memory)
+    bool operator<(const List::Iterator& it1, const List::Iterator& it2) {
+
+        return it1.currentPtr < it2.currentPtr;
+    }
+
+    // Friend function: Overloaded > operator
+    // Returns true if it1 is greater than it2 (it1 is after it2 in memory)
+    bool operator>(const List::Iterator& it1, const List::Iterator& it2) {
+        return it1.currentPtr > it2.currentPtr;
+    }
+
     // Default constructor sets default values of members
     List::List()
         : headPtr(nullptr), tailPtr(nullptr), size(0), isSorted(false), keyMkr(0) { 
@@ -32,6 +112,19 @@ namespace lomboy_a2 {
     List::~List() {
         clearList();
     }
+
+    // This method returns an iterator to the start of the linked list.
+    List::Iterator List::start() { 
+        Iterator itStart(headPtr);
+
+        return itStart; 
+    }
+
+    List::Iterator List::end() { 
+        Iterator itEnd(tailPtr);
+
+        return itEnd; 
+    } 
 
     // This is insert method adds new ListItem to head of list.
     void List::insertToHead(const listType& entry) {
@@ -151,27 +244,6 @@ namespace lomboy_a2 {
             headKey = headPtr->getDataKey();    // to use with remove function
 
         if (headKey != -1) remove(headKey);
-
-        // // check for empty list OR list having one item
-        // if (size > 0) {
-        //     ListItem* temp = headPtr;    // temporary used to delete item at head
-
-        //     // set headPtr to item after the one to be deleted, set prev to nullptr
-        //     headPtr = temp->getNext();
-
-        //     // check if list has more than one item
-        //     if (headPtr != nullptr)
-        //         headPtr->setPrev(nullptr);
-        //     else
-        //         tailPtr = nullptr;
-
-        //     // free dynamically-allocated ListItem (previous head)
-        //     delete temp;
-        //     size--;
-        // }
-        // else {
-        //     std::cout << "List has no items.\n";
-        // }
     }
 
     // This method deletes item at tail.
@@ -451,8 +523,15 @@ namespace lomboy_a2 {
         cout << "\nSorting in descending order...\n";
         tList.sortDesc();
         tList.iterate();
-    }
 
+        cout << "\nTesting List::iterator...\n";
+
+        List::Iterator it(tList.start());
+
+        cout << *it << endl;
+        // for (List::Iterator it = tList.start(); it < tList.end(); ++it)
+            // cout << *it << " ";
+    }
 
     // This method generates a text file with name "Stub-Report" displaying stub program results to
     // demonstrate class features.

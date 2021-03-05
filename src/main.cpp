@@ -15,7 +15,7 @@ int main () {
     Stack tStack;  
     Queue tQueue;
 
-    // tList.GenStubResults();
+    tList.GenStubResults();
     tList.GenStubReport();
 
     // tStack.GenStackStubResults();
