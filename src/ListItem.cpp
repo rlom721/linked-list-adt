@@ -1,11 +1,11 @@
-// ListItem.cpp
-// implementation file for ListItem class
+// Implementation file for ListItem class
+// File name: ListItem.cpp
 
 #include "ListItem.h"    // header file for ListItem class
 #include <iostream>
 using namespace std;
-
 namespace lomboy_a2 {
+
     // Default constructor uses default constructor of listDataType to set default value
     // for data field, then sets nextPtr field to nullptr
     ListItem::ListItem()
@@ -28,13 +28,6 @@ namespace lomboy_a2 {
         nextPtr = nullptr;
         prevPtr = nullptr;
     }
-
-    // // Destructor sets pointers to nullptr
-    // // ? Need to clear data?
-    // ListItem::~ListItem() {
-    //     nextPtr = nullptr;
-    //     prevPtr = nullptr;
-    // }
 
     // This method sets the data AND key field to the argument provided (via
     // copy assignment).

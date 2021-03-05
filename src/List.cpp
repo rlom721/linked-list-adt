@@ -1,11 +1,13 @@
+// Implementation file for List class
+// File name: List.cpp
 
-// #include "DataClass.h"    // header file for ListItem class
 #include "List.h"        // header file for List class
 #include "ListItem.h"    // header file for ListItem class
 #include <iostream>
 #include <fstream>      // for reading and writing to data files
 using namespace std;
 namespace lomboy_a2 {
+
     // Default constructor sets default values of members
     List::List()
         : iterator(nullptr), headPtr(nullptr), tailPtr(nullptr), size(0), keyMkr(0) { 
@@ -99,7 +101,6 @@ namespace lomboy_a2 {
         newItemPtr = nullptr;
     }
 
-    // FIX - not putting it in middle!
     // This is insert method adds new ListItem to middle of list.
     void List::insertToMid(const listType& entry) {
         ListItem* listPtr = headPtr;    // to go through list

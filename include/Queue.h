@@ -1,7 +1,7 @@
-// Specification file for Stack class
+// Specification file for Queue class
 //
-// Inherited class from List class
-// [DESC]
+// The Queue class is and inherited class from List class.
+// Features include enqueue, dequeue, search and sort methods.
 
 #ifndef QUEUE_H
 #define QUEUE_H

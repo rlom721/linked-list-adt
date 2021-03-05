@@ -1,8 +1,10 @@
+// Implementation file for Stack class
+// File name: Stack.cpp
 
 #include "List.h"        // header file for List class
-#include "Stack.h"        // header file for List class
+#include "Stack.h"       // header file for Stack class
 #include <iostream>
-#include <fstream>      // for writing files
+#include <fstream>       // for writing files
 using namespace std;
 namespace lomboy_a2 {
 

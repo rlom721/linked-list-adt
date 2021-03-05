@@ -1,8 +1,10 @@
+// Implementation file for Queue class
+// File name: Queue.cpp
 
 #include "List.h"        // header file for List class
-#include "Queue.h"        // header file for List class
+#include "Queue.h"       // header file for Queue class
 #include <iostream>
-#include <fstream>          // for writing results to file
+#include <fstream>       // for writing results to file
 using namespace std;
 namespace lomboy_a2 {
 

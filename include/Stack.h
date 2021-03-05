@@ -1,7 +1,7 @@
 // Specification file for Stack class
 //
-// Inherited class from List class
-// [DESC]
+// The Stack class is an inherited class from List class, with 
+// features including push, pop, and dislaying stack.
 
 #ifndef STACK_H
 #define STACK_H
@@ -24,6 +24,7 @@ namespace lomboy_a2 {
         void showStack();
         bool isEmpty() const;
         stackDataType showTop();
+        // Test methods
         void GenStackStubResults();      // shows functionality of List class
         void GenStackStubReport();
     private:

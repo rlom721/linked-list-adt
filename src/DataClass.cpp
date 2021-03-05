@@ -1,10 +1,11 @@
-// DataClass.cpp
-// implementation file for DataClass class
+// Implementation file for DataClass class
+// File name: DataClass.cpp
 
 #include "DataClass.h"    // header file for DataClass class
 #include <iostream>
 using namespace std;
 namespace lomboy_a2 {
+
   // Default constructor uses default constructor of data type to set
   // default value for data
   DataClass::DataClass() : data(dataType()), key(0) { }
@@ -40,7 +41,6 @@ namespace lomboy_a2 {
     return *this;
   }
 
-  // ? Delete ?
   // Friend function: Overloaded outstream operator
   // Displays data of DataClass object
   ostream& operator<<(ostream& out, const DataClass& dc) {

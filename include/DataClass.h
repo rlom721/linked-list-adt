@@ -1,7 +1,7 @@
 // Specification file for DataClass class
 //
 // This DataClass class contains a data member which can be set using
-// methods and constructors.
+// methods and constructors. It also contains a key to go with data.
 
 #ifndef DATACLASS_H
 #define DATACLASS_H
