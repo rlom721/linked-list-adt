@@ -12,10 +12,10 @@ namespace lomboy_a2 {
 
     class List {
     public:
+        // public member variables
+        const ListItem* iterator;
         // typedef
-        typedef ListItem itemType;      // for iterator
         typedef ListItem::listDataType listType;    // List depends on data type of ListItem
-        // typedef Iterator iterator;      // so user can instantiate like: List::iterator
         // Constructors
         List();
         List(listType data);
@@ -34,10 +34,10 @@ namespace lomboy_a2 {
         void sortDesc();
         void iterate();            // displays list contents as linked list!
         void clearList();
-        // Iterator start();
-        // Iterator end();
-        // listType getNext();        // get item after iterator()
-        // bool hasNext();
+        listType start(); 
+        listType end();
+        listType getNext();        
+        bool hasNext() const;
         void GenStubResults();      // shows functionality of List class
         void GenStubReport();
         // Constant methods
@@ -46,8 +46,6 @@ namespace lomboy_a2 {
         listType getData(int key);
         int getSize() const { return size; };
         bool isOrdered() const { return isSorted; };
-        // Overloaded Operators
-        // List& operator=(const List& l);    // use deep copy
         // Friend functions and classes
         friend std::ostream& operator<<(std::ostream& out, const List& l);
     private:

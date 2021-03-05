@@ -9,13 +9,13 @@ namespace lomboy_a2 {
 
     // Default constructor sets default values of members
     List::List()
-        : headPtr(nullptr), tailPtr(nullptr), size(0), isSorted(false), keyMkr(0) { 
+        : iterator(nullptr), headPtr(nullptr), tailPtr(nullptr), size(0), isSorted(false), keyMkr(0) { 
     }
 
     // Parametrized constructor sets default values of members, then inserts a new
     // entry into list.
     List::List(listType data)
-        : headPtr(nullptr), tailPtr(nullptr), size(0), isSorted(false), keyMkr(0) {
+        : iterator(nullptr), headPtr(nullptr), tailPtr(nullptr), size(0), isSorted(false), keyMkr(0) {
         insertToTail(data);
     }
 
@@ -25,6 +25,7 @@ namespace lomboy_a2 {
         // initialize variables of THIS list
         headPtr = nullptr;
         tailPtr = nullptr;
+        iterator = nullptr;
         size = 0;
         isSorted = false;
         keyMkr = 0;
@@ -291,6 +292,37 @@ namespace lomboy_a2 {
         // remove each item in list starting at head until list is empty
         while (headPtr != nullptr)
             removeHead();
+    }
+
+    // This method sets the iterator to the headPtr to keep track of item it is pointing to.
+    // Then, it returns the data of the first item.
+    List::listType List::start() {
+        iterator = headPtr;
+        return headPtr->getData();
+    }
+
+    // This method sets the iterator to the tailPtr to keep track of item it is pointing to.
+    // Then, it returns the data of the last item.
+    List::listType List::end() {
+        iterator = tailPtr;
+        return tailPtr->getData();
+    }
+
+    // This method returns the data of the item after the one iterator points to.
+    // If there is no item, it returns dummy data.
+    List::listType List::getNext() {
+        listType data(-1.0);
+        if (hasNext())
+            return data;
+        else {
+            iterator = iterator->getNext();
+            return iterator->getData();
+        }
+    }
+
+    // This method returns whether or not the item iterator points to has an item after it.
+    bool List::hasNext() const {
+        return (iterator->getNext() != nullptr);
     }
 
     // This method searches for an item with a matching key and returns its data.
