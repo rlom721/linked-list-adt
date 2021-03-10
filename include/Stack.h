@@ -24,9 +24,6 @@ namespace lomboy_a2 {
         void showStack();
         bool isEmpty() const;
         stackDataType showTop();
-        // Test methods
-        void GenStackStubResults();      // shows functionality of List class
-        void GenStackStubReport();
     private:
         int size;
     };

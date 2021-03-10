@@ -37,9 +37,6 @@ namespace lomboy_a2 {
         listType end();
         listType getNext();        
         bool hasNext() const;
-        // Test methods
-        void GenStubResults();      // shows functionality of List class
-        void GenStubReport();
         // Constant methods
         listType getData(int key);
         int getSize() const { return size; };

@@ -25,9 +25,6 @@ namespace lomboy_a2 {
         // Constant methods
         bool searchQ(int key);
         bool isEmpty() const;
-        // Test methods
-        void GenQueueStubResults();      // shows functionality of List class
-        void GenQueueStubReport();
     private:
         int size;
     };
