@@ -30,9 +30,9 @@ namespace lomboy_a2 {
         void removeHead();
         void removeTail();
         bool search(int key);
-        void sortAsc();            // selection sort
+        void sortAsc();            // uses selection sort
         void sortDesc();
-        void iterate();            // displays list contents as linked list!
+        void iterate();            // displays list contents to console as linked list!
         listType start(); 
         listType end();
         listType getNext();        

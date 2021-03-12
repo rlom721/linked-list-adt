@@ -8,9 +8,9 @@
 
 #include <iostream>
 #include <fstream>          // for reading and writing to data files
-#include "List.h"
-#include "Stack.h"
-#include "Queue.h"
+#include "List.h"           // testing base class
+#include "Stack.h"          // testing derived class (parent is List class)
+#include "Queue.h"          // testing derived class (parent is List class)
 #include "DataClass.h"      // for producing test data
 using namespace std;
 using namespace lomboy_a2;
