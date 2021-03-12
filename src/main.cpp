@@ -170,6 +170,8 @@ void GenListStubReports() {
     cout << endl;
     // tList2.iterate();
 
+    cout << tList2.canAllocate() << endl;
+
     // close files
     outFile1.close();
     outFile2.close();

@@ -23,6 +23,7 @@ namespace lomboy_a2 {
         // Constant methods
         void showStack();
         bool isEmpty() const;
+        bool isFull() const;
         stackDataType showTop();
     private:
         int size;

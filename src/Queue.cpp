@@ -56,4 +56,10 @@ namespace lomboy_a2 {
     bool Queue::isEmpty() const { 
         return (size == 0); 
     }
+
+    // This method returns true if there is no space to allocate a new item on queue.
+    // It also throws an exception to indicate a bad_alloc.
+    bool Queue::isFull() const { 
+        return canAllocate();
+    }
 }

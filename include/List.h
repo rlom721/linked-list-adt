@@ -37,6 +37,7 @@ namespace lomboy_a2 {
         iterator start() const; 
         iterator end() const;
         listType getData(int key);
+        bool canAllocate() const;
         int getSize() const { return size; };
         // Friend functions and classes
         friend std::ostream& operator<<(std::ostream& out, const List& l);

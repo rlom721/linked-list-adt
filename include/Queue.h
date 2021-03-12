@@ -25,6 +25,7 @@ namespace lomboy_a2 {
         // Constant methods
         bool searchQ(int key);
         bool isEmpty() const;
+        bool isFull() const;
     private:
         int size;
     };

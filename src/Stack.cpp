@@ -47,6 +47,12 @@ namespace lomboy_a2 {
         return (size == 0); 
     }
 
+    // This method returns true if there is no space to allocate a new item on stack.
+    // It also throws an exception to indicate a bad_alloc.
+    bool Stack::isFull() const { 
+        return canAllocate();
+    }
+
     // This method shows the top entry of the stack.
     Stack::stackDataType Stack::showTop() {
         iterator topItem = start();       // assign iterator to top item

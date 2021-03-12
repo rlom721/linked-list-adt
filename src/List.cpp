@@ -4,6 +4,7 @@
 #include "List.h"        // header file for List class
 #include "ListItem.h"    // header file for ListItem class
 #include <iostream>
+#include <new>           // for bad_alloc for isFull method
 using namespace std;
 namespace lomboy_a2 {
 
@@ -53,26 +54,30 @@ namespace lomboy_a2 {
 
     // This is insert method adds new ListItem to head of list.
     void List::insertToHead(const listType& entry) {
-        ListItem* newItemPtr = new ListItem(entry); // new item has entry data
+        // check if there is space to allocate - otherwise, exception is thrown
+        if (canAllocate()) {
 
-        newItemPtr->setKey(keyMkr++);   // set unique key of item
+            ListItem* newItemPtr = new ListItem(entry); // new item has entry data
 
-        // empty list case sets head and tail to new item
-        if (headPtr == nullptr) {
-            headPtr = newItemPtr;
-            tailPtr = newItemPtr;
+            newItemPtr->setKey(keyMkr++);   // set unique key of item
+
+            // empty list case sets head and tail to new item
+            if (headPtr == nullptr) {
+                headPtr = newItemPtr;
+                tailPtr = newItemPtr;
+            }
+            // insert to head
+            else {
+                // link new item to old head, old head's to new, set head to new
+                newItemPtr->setNext(headPtr);
+                headPtr->setPrev(newItemPtr);
+                headPtr = newItemPtr;
+            }
+
+            // increment listPtr and prevent a dangling pointer!
+            size++;
+            newItemPtr = nullptr;
         }
-        // insert to head
-        else {
-            // link new item to old head, old head's to new, set head to new
-            newItemPtr->setNext(headPtr);
-            headPtr->setPrev(newItemPtr);
-            headPtr = newItemPtr;
-        }
-
-        // increment listPtr and prevent a dangling pointer!
-        size++;
-        newItemPtr = nullptr;
     }
 
     // This is insert method adds new ListItem to tail of list.
@@ -339,39 +344,6 @@ namespace lomboy_a2 {
         return iterator(tailPtr);
     }
 
-    // // This method sets the iterator to the headPtr to keep track of item it is pointing to.
-    // // Then, it returns the data of the first item.
-    // List::listType List::start() {
-    //     iterator = headPtr;
-    //     return headPtr->getData();
-    // }
-
-    // // This method sets the iterator to the tailPtr to keep track of item it is pointing to.
-    // // Then, it returns the data of the last item.
-    // List::listType List::end() {
-    //     iterator = tailPtr;
-    //     return tailPtr->getData();
-    // }
-
-    // // This method returns the data of the item after the one iterator points to.
-    // // If there is no item, it returns dummy data.
-    // List::listType List::getNext() {
-    //     listType data(-1.0);
-
-    //     if (!hasNext())
-    //         return data;
-    //     else {
-    //         iterator = iterator->getNext();
-    //         return iterator->getData();
-    //     }
-    // }
-
-    // // This method returns whether or not the item iterator points to has an item after it.
-    // bool List::hasNext() const {
-    //     bool notAtEnd = (iterator->getNext() != nullptr);
-    //     return notAtEnd;
-    // }
-
     // This method searches for an item with a matching key and returns its data.
     // returns dummy data if invalid index
     List::listType List::getData(int key) {
@@ -384,6 +356,27 @@ namespace lomboy_a2 {
         }
         else 
             return item->getData();
+    }
+
+    // This method returns true if there is no space to allocate a new item.
+    // It also throws an exception to indicate a bad_alloc.
+    bool List::canAllocate() const { 
+        bool hasSpace = false;
+
+        try {
+            ListItem* testItem = new ListItem;   // test item to check space
+            
+            // delete allocated memory (will occur if there is no exception thrown)
+            delete testItem;
+            testItem = nullptr;
+            hasSpace = true;
+        }
+        catch (bad_alloc& ba) {
+            cerr << "Not enought memory to allocate new item. bad_alloc caught: "
+                 << ba.what() << '\n';
+        }
+
+        return hasSpace;
     }
 
     // This helper function searches through list for an item with a matching key,
