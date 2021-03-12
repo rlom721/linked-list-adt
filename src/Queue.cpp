@@ -27,12 +27,14 @@ namespace lomboy_a2 {
 
     // This method removes an entry from the front of the Queue and returns it.
     Queue::queueDataType Queue::dequeue() {
-        queueDataType topData = start(); // temporarily store to return after deletion
+        iterator frontItem = start();        // assign iterator to front item
+        queueDataType frontData = *frontItem; // store data of item to return after deletion
 
+        // remove item and update size
         removeHead();
-        size = getSize();
+        size = getSize(); 
 
-        return topData;
+        return frontData;
     }
 
     // This method sorts the items in the queue in ascending order.

@@ -12,8 +12,8 @@ namespace lomboy_a2 {
 
     class List {
     public:
-        // public member variables
-        const ListItem* iterator;
+        // forward declaration
+        class iterator;
         // typedef
         typedef ListItem::listDataType listType;    // List depends on data type of ListItem
         // Constructors
@@ -33,15 +33,41 @@ namespace lomboy_a2 {
         void sortAsc();            // uses selection sort
         void sortDesc();
         void iterate();            // displays list contents to console as linked list!
-        listType start(); 
-        listType end();
-        listType getNext();        
-        bool hasNext() const;
         // Constant methods
+        iterator start() const; 
+        iterator end() const;
         listType getData(int key);
         int getSize() const { return size; };
         // Friend functions and classes
         friend std::ostream& operator<<(std::ostream& out, const List& l);
+        // Nested class (is also implicitly a friend)
+        class iterator {
+            // friend classes/classes
+            friend class List;
+            // typedef
+            typedef ListItem itemType;  // iterator points to this type
+            typedef List::listType itemData;  // iterator points to this type
+        public:
+            // Constructors
+            iterator();
+            iterator(itemType* start);
+            iterator(const iterator& it);
+            // Modification methods
+            itemData getNext();
+            // Constant methods
+            bool hasNext() const;
+            itemData operator*() const;
+            // Overloaded operators
+            iterator& operator=(const iterator& it);
+            iterator& operator++();     // prefix increment
+            iterator& operator--();     // prefix decrement
+            // Friend functions
+            friend bool operator!=(const iterator& it1, const iterator& it2);
+            friend bool operator==(const iterator& it1, const iterator& it2);
+        private:
+            const itemType* currentPtr;
+            int itemNum;
+        };
     private:
         // Helper functions
         void clearList();

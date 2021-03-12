@@ -27,8 +27,10 @@ namespace lomboy_a2 {
 
     // This method pops an entry off the top of the stack and returns it.
     Stack::stackDataType Stack::pop() {
-        stackDataType topData = start(); // temporarily store to return after deletion
+        iterator topItem = start();       // assign iterator to top item
+        stackDataType topData = *topItem; // store data of item to return after deletion
 
+        // remove item and update size
         removeHead();
         size = getSize();
 
@@ -47,6 +49,9 @@ namespace lomboy_a2 {
 
     // This method shows the top entry of the stack.
     Stack::stackDataType Stack::showTop() {
-        return start();
+        iterator topItem = start();       // assign iterator to top item
+        stackDataType topData = *topItem; // store data of item to return after deletion
+
+        return topData;
     }
 }

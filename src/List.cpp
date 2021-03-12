@@ -9,13 +9,13 @@ namespace lomboy_a2 {
 
     // Default constructor sets default values of members
     List::List()
-        : iterator(nullptr), headPtr(nullptr), tailPtr(nullptr), size(0), keyMkr(0) { 
+        : headPtr(nullptr), tailPtr(nullptr), size(0), keyMkr(0) { 
     }
 
     // Parametrized constructor sets default values of members, then inserts a new
     // entry into list.
     List::List(listType data)
-        : iterator(nullptr), headPtr(nullptr), tailPtr(nullptr), size(0), keyMkr(0) {
+        : headPtr(nullptr), tailPtr(nullptr), size(0), keyMkr(0) {
         insertToTail(data);
     }
 
@@ -25,7 +25,6 @@ namespace lomboy_a2 {
         // initialize variables of THIS list
         headPtr = nullptr;
         tailPtr = nullptr;
-        iterator = nullptr;
         size = 0;
         keyMkr = 0;
 
@@ -327,38 +326,51 @@ namespace lomboy_a2 {
             removeHead();
     }
 
-    // This method sets the iterator to the headPtr to keep track of item it is pointing to.
+
+    // This method returns an iterator  the iterator to the headPtr to keep track of item it is pointing to.
     // Then, it returns the data of the first item.
-    List::listType List::start() {
-        iterator = headPtr;
-        return headPtr->getData();
+    List::iterator List::start() const {
+        return iterator(headPtr);
     }
 
     // This method sets the iterator to the tailPtr to keep track of item it is pointing to.
     // Then, it returns the data of the last item.
-    List::listType List::end() {
-        iterator = tailPtr;
-        return tailPtr->getData();
+    List::iterator List::end() const {
+        return iterator(tailPtr);
     }
 
-    // This method returns the data of the item after the one iterator points to.
-    // If there is no item, it returns dummy data.
-    List::listType List::getNext() {
-        listType data(-1.0);
+    // // This method sets the iterator to the headPtr to keep track of item it is pointing to.
+    // // Then, it returns the data of the first item.
+    // List::listType List::start() {
+    //     iterator = headPtr;
+    //     return headPtr->getData();
+    // }
 
-        if (!hasNext())
-            return data;
-        else {
-            iterator = iterator->getNext();
-            return iterator->getData();
-        }
-    }
+    // // This method sets the iterator to the tailPtr to keep track of item it is pointing to.
+    // // Then, it returns the data of the last item.
+    // List::listType List::end() {
+    //     iterator = tailPtr;
+    //     return tailPtr->getData();
+    // }
 
-    // This method returns whether or not the item iterator points to has an item after it.
-    bool List::hasNext() const {
-        bool notAtEnd = (iterator->getNext() != nullptr);
-        return notAtEnd;
-    }
+    // // This method returns the data of the item after the one iterator points to.
+    // // If there is no item, it returns dummy data.
+    // List::listType List::getNext() {
+    //     listType data(-1.0);
+
+    //     if (!hasNext())
+    //         return data;
+    //     else {
+    //         iterator = iterator->getNext();
+    //         return iterator->getData();
+    //     }
+    // }
+
+    // // This method returns whether or not the item iterator points to has an item after it.
+    // bool List::hasNext() const {
+    //     bool notAtEnd = (iterator->getNext() != nullptr);
+    //     return notAtEnd;
+    // }
 
     // This method searches for an item with a matching key and returns its data.
     // returns dummy data if invalid index
@@ -442,5 +454,64 @@ namespace lomboy_a2 {
         listPtr = nullptr;
 
         return out;
+    }
+
+    // Default constructor for List's iterator class 
+    List::iterator::iterator() : currentPtr(nullptr) { }
+
+    // Parameterized constructor for iterator class sets currentPtr to argument
+    List::iterator::iterator(itemType* start) : currentPtr(start) { }
+
+    // copy constructor copies pointers!
+    List::iterator::iterator(const iterator& it) { currentPtr = it.currentPtr; }
+
+    // returns true if item has an item after it
+    bool List::iterator::hasNext() const { return currentPtr; }
+
+    // Moves iterator to next item then returns next item data
+    List::iterator::itemData List::iterator::getNext() {
+        currentPtr = currentPtr->getNext();
+        return currentPtr->getData();
+    }
+
+    // Overloaded copy assignment checks if same object, then returns it
+    List::iterator& List::iterator::operator=(const iterator& it) {
+        // check if same object
+        if (this != &it) 
+            currentPtr = it.currentPtr;
+
+        return *this;
+    }
+
+    // Overloaded dereference operator to display data of current item being pointed to
+    // To be used like dereferencing a pointer: *ptr
+    List::iterator::itemData List::iterator::operator*() const { 
+        return currentPtr->getData(); 
+    }
+
+    // Overloaded prefix increment operator to move to next item
+    List::iterator& List::iterator::operator++() { 
+        if (currentPtr != nullptr)
+            currentPtr = currentPtr->getNext(); 
+        return *this;
+    }
+
+    // Overloaded prefix decrement operator to go to previous item
+    List::iterator& List::iterator::operator--() { 
+        if (currentPtr != nullptr)
+            currentPtr = currentPtr->getPrev(); 
+        return *this;
+    }
+
+    // Friend function: Overloaded != operator
+    // Returns true if it1 and it2 do NOT point to same spot in memory.
+    bool operator!=(const List::iterator& it1, const List::iterator& it2) {
+        return it1.currentPtr != it2.currentPtr;
+    }
+
+    // Friend function: Overloaded == operator
+    // Returns true if it1 and it2 point to same spot in memory.
+    bool operator==(const List::iterator& it1, const List::iterator& it2) {
+        return it1.currentPtr == it2.currentPtr;
     }
 }

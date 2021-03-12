@@ -142,18 +142,33 @@ void GenListStubReports() {
     tList2.sortDesc();
     outFile2 << tList2 << endl;
 
-    outFile2 << "Testing start() method...\n";
-    outFile2 << "Showing item data at start: " << tList2.start() << endl;
+    // outFile2 << "Testing start() method...\n";
+    // outFile2 << "Showing item data at start: " << tList2.start() << endl;
 
-    outFile2 << "\nTesting getNext() method...\n";
-    outFile2 << "Showing next item data: " << tList2.getNext() << endl;
+    // outFile2 << "\nTesting getNext() method...\n";
+    // outFile2 << "Showing next item data: " << tList2.getNext() << endl;
 
-    outFile2 << "\nTesting hasNext() method...\n";
-    outFile2 << "Is there item after current? " 
-                << (tList2.hasNext() ? "Yes" : "No") << endl;
+    // outFile2 << "\nTesting hasNext() method...\n";
+    // outFile2 << "Is there item after current? " 
+    //             << (tList2.hasNext() ? "Yes" : "No") << endl;
 
-    outFile2 << "\nTesting end() method...\n";
-    outFile2 << "Showing item data at end: " << tList2.end() << endl;
+    // outFile2 << "\nTesting end() method...\n";
+    // outFile2 << "Showing item data at end: " << tList2.end() << endl;
+
+    outFile2 << "Testing List Iterator methods...\n";
+
+    // List::iterator iter = tList2.start();
+
+    // while (iter.hasNext()) {
+    //     cout << *iter << endl;
+    //     ++iter;
+    // }
+
+    for (List::iterator iter = tList2.start(); iter.hasNext(); ++iter) {
+        cout << *iter << " ";
+    }
+    cout << endl;
+    // tList2.iterate();
 
     // close files
     outFile1.close();
