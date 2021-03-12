@@ -142,35 +142,29 @@ void GenListStubReports() {
     tList2.sortDesc();
     outFile2 << tList2 << endl;
 
-    // outFile2 << "Testing start() method...\n";
-    // outFile2 << "Showing item data at start: " << tList2.start() << endl;
+    outFile2 << "Testing isFull method...\n";
+    outFile2 << "List is " << (tList2.canAllocate() ? "not full" : "full") << endl;
 
-    // outFile2 << "\nTesting getNext() method...\n";
-    // outFile2 << "Showing next item data: " << tList2.getNext() << endl;
+    outFile2 << "\nList iterator methods tests\n";
 
-    // outFile2 << "\nTesting hasNext() method...\n";
-    // outFile2 << "Is there item after current? " 
-    //             << (tList2.hasNext() ? "Yes" : "No") << endl;
+    List::iterator iter = tList2.start();
 
-    // outFile2 << "\nTesting end() method...\n";
-    // outFile2 << "Showing item data at end: " << tList2.end() << endl;
+    outFile2 << "\nTesting start() method... (returns iterator to starting item)\n"
+             << "List iterator is pointing to start.\n" 
+             << "Dereferencing iterator to show data at start: " << *iter << endl;
 
-    outFile2 << "Testing List Iterator methods...\n";
+    outFile2 << "\nTesting hasNext() method...\n"
+             << "Is there an item after the current? " 
+             << (iter.hasNext() ? "Yes" : "No") << endl;
 
-    // List::iterator iter = tList2.start();
+    outFile2 << "\nTesting iterating over list... (uses hasNext() and overloaded * and ++)\n";
 
-    // while (iter.hasNext()) {
-    //     cout << *iter << endl;
-    //     ++iter;
-    // }
-
-    for (List::iterator iter = tList2.start(); iter.hasNext(); ++iter) {
-        cout << *iter << " ";
+    outFile2 << "START->";
+    while (iter.hasNext()) {
+        outFile2 << *iter << "->";
+        ++iter;
     }
-    cout << endl;
-    // tList2.iterate();
-
-    cout << tList2.canAllocate() << endl;
+    outFile2 << "END";
 
     // close files
     outFile1.close();
@@ -225,6 +219,9 @@ void GenStackStubReport() {
 
     outFile << "\nTesting isEmpty() method...\n";
     outFile << "Stack is " << (sTest.isEmpty() ? "empty" : "not empty") << endl;
+
+    outFile << "\nTesting isFull method...\n";
+    outFile << "Stack is " << (sTest.canAllocate() ? "not full" : "full") << endl;
 
     outFile.close();
 }
@@ -300,6 +297,9 @@ void GenQueueStubReport() {
 
     outFile << "\nTesting isEmpty() method...\n";
     outFile << "Queue is " << (qTest.isEmpty() ? "empty" : "not empty") << endl;
+
+    outFile << "\nTesting isFull method...\n";
+    outFile << "Queue is " << (qTest.canAllocate() ? "not full" : "full") << endl;
 
     outFile.close();
 }

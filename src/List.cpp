@@ -82,65 +82,71 @@ namespace lomboy_a2 {
 
     // This is insert method adds new ListItem to tail of list.
     void List::insertToTail(const listType& entry) {
-        ListItem* newItemPtr = new ListItem(entry); // new item has entry data
+        // check if there is space to allocate - otherwise, exception is thrown
+        if (canAllocate()) {
+            ListItem* newItemPtr = new ListItem(entry); // new item has entry data
 
-        newItemPtr->setKey(keyMkr++);   // set unique key of item
+            newItemPtr->setKey(keyMkr++);   // set unique key of item
 
-        // empty list case sets head and tail to new item
-        if (headPtr == nullptr) {
-            headPtr = newItemPtr;
-            tailPtr = newItemPtr;
+            // empty list case sets head and tail to new item
+            if (headPtr == nullptr) {
+                headPtr = newItemPtr;
+                tailPtr = newItemPtr;
+            }
+            // insert to tail
+            else {
+                // link new item to old tail, old tail's to new, set tail to new
+                newItemPtr->setPrev(tailPtr);
+                tailPtr->setNext(newItemPtr);
+                tailPtr = newItemPtr;
+            }
+
+            // increment listPtr and prevent a dangling pointer!
+            size++;
+            newItemPtr = nullptr;
         }
-        // insert to tail
-        else {
-            // link new item to old tail, old tail's to new, set tail to new
-            newItemPtr->setPrev(tailPtr);
-            tailPtr->setNext(newItemPtr);
-            tailPtr = newItemPtr;
-        }
-
-        // increment listPtr and prevent a dangling pointer!
-        size++;
-        newItemPtr = nullptr;
     }
 
     // This is insert method adds new ListItem to middle of list.
     void List::insertToMid(const listType& entry) {
-        ListItem* listPtr = headPtr;    // to go through list
-        ListItem* newItemPtr = new ListItem(entry); // new item has entry data
+        // check if there is space to allocate - otherwise, exception is thrown
+        if (canAllocate()) {
+            ListItem* listPtr = headPtr;    // to go through list
+            ListItem* newItemPtr = new ListItem(entry); // new item has entry data
 
-        newItemPtr->setKey(keyMkr++);   // set unique key of item
+            newItemPtr->setKey(keyMkr++);   // set unique key of item
 
-        int item = 0;      // places to move in list
+            int item = 0;      // places to move in list
 
-        // empty list case sets head and tail to new item
-        if (headPtr == nullptr) {
-            headPtr = newItemPtr;
-            tailPtr = newItemPtr;
+            // empty list case sets head and tail to new item
+            if (headPtr == nullptr) {
+                headPtr = newItemPtr;
+                tailPtr = newItemPtr;
+            }
+
+            while (item < ((size - 1) / 2)) {
+                listPtr = listPtr->getNext();
+                item++;
+            }
+
+            // insert to middle location, after listPtr
+            ListItem* nextItemPtr;      // points to item AFTER listPtr
+            nextItemPtr = listPtr->getNext();
+
+            // link new item to listPtr and to next
+            newItemPtr->setPrev(listPtr);
+            newItemPtr->setNext(nextItemPtr);
+            
+            // link listPtr to new and next to new
+            listPtr->setNext(newItemPtr);
+            nextItemPtr->setPrev(newItemPtr);
+
+            size++;
+
+            // to prevent dangling pointer!
+            nextItemPtr = nullptr;
+            listPtr = nullptr;
         }
-
-        while (item < ((size - 1) / 2)) {
-            listPtr = listPtr->getNext();
-            item++;
-        }
-
-        // insert to middle location, after listPtr
-        ListItem* nextItemPtr;      // points to item AFTER listPtr
-        nextItemPtr = listPtr->getNext();
-
-        // link new item to listPtr and to next
-        newItemPtr->setPrev(listPtr);
-        newItemPtr->setNext(nextItemPtr);
-        
-        // link listPtr to new and next to new
-        listPtr->setNext(newItemPtr);
-        nextItemPtr->setPrev(newItemPtr);
-
-        size++;
-
-        // to prevent dangling pointer!
-        nextItemPtr = nullptr;
-        listPtr = nullptr;
     }
 
     // This method deletes item with a matching key.
@@ -302,18 +308,20 @@ namespace lomboy_a2 {
 
     // This method displays list contents as linked list!
     void List::iterate() {
-        ListItem* listPtr = headPtr;
+        iterator it = start();
+        
 
         // iterate through to show data fields of items
         cout << "START->";
-        while (listPtr != nullptr) {
-            cout << listPtr->getData() << "->";
-            listPtr = listPtr->getNext();
+        while (it.hasNext()) {
+            cout << *it << "->";
+            ++it;
         }
         cout << "END\n";
 
         // iterate through again to show keys
-        listPtr = headPtr;
+        ListItem* listPtr = headPtr;
+
         cout << "KEY:   ";
         while (listPtr != nullptr) {
             cout << "(" << listPtr->getDataKey() << ")  ";
@@ -330,7 +338,6 @@ namespace lomboy_a2 {
         while (headPtr != nullptr)
             removeHead();
     }
-
 
     // This method returns an iterator  the iterator to the headPtr to keep track of item it is pointing to.
     // Then, it returns the data of the first item.
@@ -365,7 +372,7 @@ namespace lomboy_a2 {
 
         try {
             ListItem* testItem = new ListItem;   // test item to check space
-            
+
             // delete allocated memory (will occur if there is no exception thrown)
             delete testItem;
             testItem = nullptr;
@@ -450,13 +457,16 @@ namespace lomboy_a2 {
     }
 
     // Default constructor for List's iterator class 
-    List::iterator::iterator() : currentPtr(nullptr) { }
+    List::iterator::iterator() : currentPtr(nullptr), itemNum(0) { }
 
     // Parameterized constructor for iterator class sets currentPtr to argument
-    List::iterator::iterator(itemType* start) : currentPtr(start) { }
+    List::iterator::iterator(itemType* start) : currentPtr(start), itemNum(0) { }
 
     // copy constructor copies pointers!
-    List::iterator::iterator(const iterator& it) { currentPtr = it.currentPtr; }
+    List::iterator::iterator(const iterator& it) { 
+        currentPtr = it.currentPtr; 
+        itemNum = it.itemNum;
+    }
 
     // returns true if item has an item after it
     bool List::iterator::hasNext() const { return currentPtr; }
@@ -464,15 +474,18 @@ namespace lomboy_a2 {
     // Moves iterator to next item then returns next item data
     List::iterator::itemData List::iterator::getNext() {
         currentPtr = currentPtr->getNext();
+        itemNum++;
+
         return currentPtr->getData();
     }
 
     // Overloaded copy assignment checks if same object, then returns it
     List::iterator& List::iterator::operator=(const iterator& it) {
         // check if same object
-        if (this != &it) 
+        if (this != &it) {
             currentPtr = it.currentPtr;
-
+            itemNum = it.itemNum;
+        }
         return *this;
     }
 
@@ -484,8 +497,11 @@ namespace lomboy_a2 {
 
     // Overloaded prefix increment operator to move to next item
     List::iterator& List::iterator::operator++() { 
-        if (currentPtr != nullptr)
+        if (currentPtr != nullptr) {
             currentPtr = currentPtr->getNext(); 
+            itemNum++;
+        }
+
         return *this;
     }
 
