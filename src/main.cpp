@@ -15,12 +15,7 @@
 using namespace std;
 using namespace lomboy_a2;
 
-// TODO :
-// add iterator class
-// summon iterator class to access List container contents
-// add isFull method to List class
-
-// function prototypes
+// Function prototypes
 void GenListStubReports();          
 void GenStackStubReport();
 void GenQueueStubReport();
@@ -120,7 +115,7 @@ void GenListStubReports() {
     // print out data for Unordered Operations
     outFile2 << "LIST CLASS ORDERED OPERATIONS REPORT\n\n"
             << "This displays the functionality of the List class, including copy constructor\n"
-            << "use and methods using test data. Only ordered operations shown.\n\n";
+            << "use, iterator and methods using test data. Only ordered operations shown.\n\n";
 
     List tList2(tList);     // copy contents of first list used above
 

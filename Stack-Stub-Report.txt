@@ -1,0 +1,45 @@
+STACK CLASS TEST REPORT
+
+This displays the functionality of the Stack class, including constructor
+use and methods using test data.
+
+Constructor Tests
+
+Testing Default constructor...
+Stack should have no data.
+START->END
+KEY:   
+
+Testing Parametrized Constructor...
+Stack initialized with data: 0.1 inserted.
+Showing Stack Contents:
+START->0.1->END
+KEY:   (0)  
+
+Testing Copy constructor...
+Showing contents of original stack:
+START->0.1->END
+KEY:   (0)  
+Stack created with copy constructor:
+START->0.1->END
+KEY:   (0)  
+
+Methods Tests
+
+Testing push() method...
+START->0.2->0.1->END
+KEY:   (1)  (0)  
+
+Testing showTop() method...
+Data at top: 0.2
+Testing pop() method...
+START->0.1->END
+KEY:   (0)  
+
+Popped data 0.2 off stack!
+
+Testing isEmpty() method...
+Stack is not empty
+
+Testing isFull method...
+Stack is not full

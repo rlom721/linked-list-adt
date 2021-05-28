@@ -1,0 +1,68 @@
+LIST CLASS UNORDERED OPERATIONS REPORT
+
+This displays the functionality of the List class, including constructor
+use and methods using test data. Only unordered operations shown.
+
+Constructor Tests
+
+Testing Default constructor...
+List 2 should have no data.
+START->END
+KEY:   
+
+Testing Parametrized constructor...
+List 1 initialized with data 0.7 inserted at start.
+START->0.7->END
+KEY:   (0)  
+
+Method Tests
+Testing insertToHead() method...
+Inserting 1.1 to head...
+START->1.1->0.7->END
+KEY:   (1)  (0)  
+
+Testing insertToTail() method...
+Inserting 2.4 to tail...
+START->1.1->0.7->2.4->END
+KEY:   (1)  (0)  (2)  
+
+Testing insertToMid() method...
+Inserting 3.5 to middle...
+START->1.1->0.7->3.5->2.4->END
+KEY:   (1)  (0)  (3)  (2)  
+
+Testing removeHead() method...
+Removed item at head.
+START->0.7->3.5->2.4->END
+KEY:   (0)  (3)  (2)  
+
+Testing removeTail() method...
+Removed item at tail
+START->0.7->3.5->END
+KEY:   (0)  (3)  
+
+Inserting 0.7 to middle...
+START->0.7->0.7->3.5->END
+KEY:   (0)  (4)  (3)  
+
+
+Inserting 1.1 to middle...
+START->0.7->0.7->1.1->3.5->END
+KEY:   (0)  (4)  (5)  (3)  
+
+Testing remove() method...
+Removed item with key 4.
+START->0.7->1.1->3.5->END
+KEY:   (0)  (5)  (3)  
+
+Testing getSize() method...
+List size: 3
+
+Testing search() method...
+Searching for key of 0: found
+Searching for key of 1: not found
+Searching for key of 2: not found
+Searching for key of 3: found
+
+Testing getData() method...
+Getting item with key 5: 1.1

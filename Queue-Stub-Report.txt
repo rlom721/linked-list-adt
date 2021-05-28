@@ -1,0 +1,62 @@
+QUEUE CLASS TEST REPORT
+
+This displays the functionality of the Queue class, including constructor
+use and methods using test data.
+
+Constructor Tests
+
+Testing Default constructor...
+Queue should have no data.
+START->END
+KEY:   
+
+Testing Parametrized Constructor...
+Queue initialized with data: 0.1 inserted.
+Showing Queue Contents:
+START->0.1->END
+KEY:   (0)  
+
+Testing Copy constructor...
+Showing contents of original Queue:
+START->0.1->END
+KEY:   (0)  
+Queue created with copy constructor:
+START->0.1->END
+KEY:   (0)  
+
+Methods Tests
+
+Testing enqueue() method...
+START->0.1->0.2->END
+KEY:   (0)  (1)  
+
+Testing dequeue() method...
+Dequeued data 0.1 off queue!
+START->0.2->END
+KEY:   (1)  
+
+Adding items...
+START->0.2->0.3->0.1->END
+KEY:   (1)  (2)  (3)  
+
+Testing sort() method...
+Sorting in ascending order...
+START->0.1->0.2->0.3->END
+KEY:   (3)  (1)  (2)  
+
+Testing sortDsc() method...
+Sorting in descending order...
+START->0.3->0.2->0.1->END
+KEY:   (2)  (1)  (3)  
+
+Testing search method...
+Searching for key of 0: not found
+Searching for key of 1: found
+Searching for key of 2: found
+Searching for key of 3: found
+
+Testing isEmpty() method...
+Queue is not empty
+
+Testing isFull method...
+Queue is not full
